@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\BookingSuccessEvent;
+use App\Events\BookingVerifyEvent;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //$appointment=['id'=>1,'code'=>'16547','is_verify'=>'0','name'=>'mohamed frouh','time'=>now()->diffForHumans()];
+    // event(new BookingVerifyEvent($appointment));
+    // event(new BookingSuccessEvent($appointment));
     return view('welcome');
 });
+
+Auth::routes();
+Route::get('/verify',[App\Http\Controllers\Frontend\AppointmentController::class,'verify']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
