@@ -17,12 +17,12 @@ class CreateClinicsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('clinic_name');
+            $table->string('image');
             $table->string('address');
             $table->string('city');
             $table->string('state');
             $table->string('country');
-            $table->time('open');
-            $table->time('close');
             $table->enum('time_appointment',['15','30','45','60'])->default('15');
             $table->integer('price');
             $table->enum('type_booking',['7','14','30'])->default('7');

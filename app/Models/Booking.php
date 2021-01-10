@@ -10,11 +10,11 @@ class Booking extends Model
     use HasFactory;
     protected $table='bookings';
 
-    protected $fillable=['clinic_id','appointment_time_id','verfied','verfication_code','phone_number','age','gender','name'];
+    protected $fillable=['clinic_id','appointment_time_id','verified','verification_code','phone_number','age','gender','name'];
 
-    protected $casts=['verfied'=>'boolean'];
+    protected $casts=['verified'=>'boolean'];
 
-    public function appointmenttime()
+    public function time()
     {
         return $this->belongsTo('App\Models\AppointmentTime');
     }

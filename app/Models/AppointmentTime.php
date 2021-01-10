@@ -15,7 +15,7 @@ class AppointmentTime extends Model
 
     protected $casts=['booked'=>'boolean'];
 
-    public function appointmentdate()
+    public function date()
     {
         return $this->belongsTo('App\Models\AppointmentDate');
     }

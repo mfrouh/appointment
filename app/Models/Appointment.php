@@ -17,10 +17,12 @@ class Appointment extends Model
     {
         return $this->belongsTo('App\Models\Clinic');
     }
+
     public function patient()
     {
         return $this->belongsTo('App\Models\Patient');
     }
+
     public function time()
     {
         return $this->belongsTo('App\Models\AppointmentTime');
