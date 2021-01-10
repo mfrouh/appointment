@@ -22,6 +22,23 @@ Route::get('/', function () {
     // event(new BookingSuccessEvent($appointment));
     return view('welcome');
 });
+Route::resource('speciality', 'Backend\SpecialityController');
+Route::resource('patient', 'Backend\PatientController');
+Route::resource('surgery', 'Backend\SurgeryController');
+Route::resource('prescription', 'Backend\PrescriptionController');
+Route::resource('booking', 'Backend\BookingController');
+Route::resource('appointment', 'Backend\AppointmentController');
+Route::resource('clinic', 'Backend\ClinicController');
+Route::resource('followup', 'Backend\FollowUpController');
+Route::get('/clinic/appointmentdate','Backend\AppointmentDateController@index');
+Route::get('/clinic/workdate','Backend\WorkDateController@index');
+Route::post('/clinic/workdate','Backend\WorkDateController@store');
+Route::get('/clinic/social','Backend\SocialController@index');
+Route::post('/clinic/social','Backend\SocialController@store');
+Route::get('/clinic/blacklist','Backend\BlacklistController@index');
+Route::post('/clinic/blacklist','Backend\BlacklistController@store');
+Route::get('/setting','Backend\SettingController@index');
+Route::post('/setting','Backend\SettingController@store');
 
 Auth::routes();
 Route::get('/verify',[App\Http\Controllers\Frontend\AppointmentController::class,'verify']);
