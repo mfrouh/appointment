@@ -15,7 +15,8 @@ class SurgeryController extends Controller
      */
     public function index()
     {
-        return view('backend.surgery.index');
+        $surgeries=Surgery::all();
+        return view('backend.surgery.index',compact('surgeries'));
     }
 
     /**
@@ -42,6 +43,7 @@ class SurgeryController extends Controller
             'name'=>'required|min:4|max:40',
             'day'=>'required|date',
             'time'=>'required|time',
+            'hospital_name'=>'required|min:2|max:50',
         ]);
         auth()->user()->clinic->surgeries()->create($request->all());
         return back();
@@ -84,6 +86,7 @@ class SurgeryController extends Controller
             'name'=>'required|min:4|max:40',
             'day'=>'required|date',
             'time'=>'required|time',
+            'hospital_name'=>'required|min:2|max:50',
         ]);
         $surgery->update($request->all());
         return back();

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-الحجوزات
+الخبرات
 @endsection
 @section('css')
 <!-- Internal Data table css -->
@@ -16,7 +16,7 @@
   <div class="breadcrumb-header justify-content-between">
 	<div class="my-auto">
 		<div class="d-flex">
-			<h4 class="content-title mb-0 my-auto">الحجوزات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"></span>
+			<h4 class="content-title mb-0 my-auto">الخبرات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"></span>
 		</div>
 	</div>
   </div>
@@ -29,7 +29,7 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
- 					<h4 class="card-title mg-b-0">الحجوزات</h4>
+ 					<h4 class="card-title mg-b-0">الخبرات</h4>
  				</div>
  			</div>
  			<div class="card-body">
@@ -38,25 +38,22 @@
  						<thead>
  							<tr>
  								<th class="border-bottom-0">العيادة</th>
- 								<th class="border-bottom-0">المريض</th>
-                                <th class="border-bottom-0">وقت الكشف</th>
-                                <th class="border-bottom-0">وقت الحجز</th>
-                                <th class="border-bottom-0">السعر</th>
+                                <th class="border-bottom-0">اسم المستشفي</th>
+                                <th class="border-bottom-0">من</th>
+                                <th class="border-bottom-0">الي</th>
  								<th class="border-bottom-0">الصلاحيات</th>
  							</tr>
  						</thead>
  						<tbody>
-						 @foreach ($bookings as $booking)
+						 @foreach ($experiences as $experience)
  							<tr>
- 								<td>{{$booking->clinic->name}}</td>
-                                <td>{{$booking->name}}</td>
-                                <td>{{$booking->appointment_time_id}}</td>
-                                <td>{{$booking->created_at}}</td>
-                                <td>{{$booking->price}}</td>
-                                <td>{{$booking->dignose}}</td>
+ 								<td>{{$experience->clinic->name}}</td>
+                                <td>{{$experience->hospital_name}}</td>
+                                <td>{{$experience->from}}</td>
+                                <td>{{$experience->to}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$booking->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                     <a class="btn btn-danger btn-sm delete"  data-id="{{$booking->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm edit" data-id="{{$experience->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-danger btn-sm delete"  data-id="{{$experience->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
 						 @endforeach
@@ -99,18 +96,18 @@ $.ajaxSetup({
 $('.delete').click(function()
 {
     var id=$(this).attr("data-id");
-    this.deletebooking(id);
+    this.deleteexperience(id);
 });
 $('.edit').click(function()
 {
     var id=$(this).attr("data-id");
     console.log('edit button');
 });
-function deletebooking(id)
+function deleteexperience(id)
 {
     $.ajax({
         type: "delete",
-        url: "/booking/"+id,
+        url: "/experience/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();

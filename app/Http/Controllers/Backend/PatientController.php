@@ -15,7 +15,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-       return view('backend.patient.index');
+       $patients=Patient::all();
+       return view('backend.patient.index',compact('patients'));
     }
 
     /**

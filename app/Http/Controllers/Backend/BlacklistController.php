@@ -10,7 +10,8 @@ class BlacklistController extends Controller
 {
     public function index()
     {
-       return view('backend.blacklist.index');
+       $blacklists=auth()->user()->clinic->blacklists;
+       return view('backend.blacklist.index',compact('blacklists'));
     }
 
     public function store(Request $request)
@@ -18,7 +19,7 @@ class BlacklistController extends Controller
        $this->validate($request,
        ['phone_number'=>'required|unique:black_lists,phone_number,Null,id,clinic_id,'.auth()->user()->clinic->id]
        );
-       auth()->user()->clinic->create($request->all());
+       auth()->user()->clinic->blacklists()->create($request->all());
        return back();
     }
 

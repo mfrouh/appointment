@@ -72,4 +72,24 @@ class Clinic extends Model
     {
         return $this->hasMany('App\Models\WorkDate');
     }
+
+    public function social()
+    {
+        return $this->hasOne('App\Models\Social');
+    }
+
+    public function services()
+    {
+        return $this->hasMany('App\Models\Service');
+    }
+
+    public function educations()
+    {
+        return $this->hasMany('App\Models\Education');
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany('App\Models\Experience');
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-الحجوزات
+التعليم
 @endsection
 @section('css')
 <!-- Internal Data table css -->
@@ -16,7 +16,7 @@
   <div class="breadcrumb-header justify-content-between">
 	<div class="my-auto">
 		<div class="d-flex">
-			<h4 class="content-title mb-0 my-auto">الحجوزات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"></span>
+			<h4 class="content-title mb-0 my-auto">التعليم</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"></span>
 		</div>
 	</div>
   </div>
@@ -29,7 +29,7 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
- 					<h4 class="card-title mg-b-0">الحجوزات</h4>
+ 					<h4 class="card-title mg-b-0">التعليم</h4>
  				</div>
  			</div>
  			<div class="card-body">
@@ -38,25 +38,24 @@
  						<thead>
  							<tr>
  								<th class="border-bottom-0">العيادة</th>
- 								<th class="border-bottom-0">المريض</th>
-                                <th class="border-bottom-0">وقت الكشف</th>
-                                <th class="border-bottom-0">وقت الحجز</th>
-                                <th class="border-bottom-0">السعر</th>
+                                <th class="border-bottom-0">كلية</th>
+                                <th class="border-bottom-0">الدرجة العلمية</th>
+                                <th class="border-bottom-0">من</th>
+                                <th class="border-bottom-0">الي</th>
  								<th class="border-bottom-0">الصلاحيات</th>
  							</tr>
  						</thead>
  						<tbody>
-						 @foreach ($bookings as $booking)
+						 @foreach ($educations as $education)
  							<tr>
- 								<td>{{$booking->clinic->name}}</td>
-                                <td>{{$booking->name}}</td>
-                                <td>{{$booking->appointment_time_id}}</td>
-                                <td>{{$booking->created_at}}</td>
-                                <td>{{$booking->price}}</td>
-                                <td>{{$booking->dignose}}</td>
+ 								<td>{{$education->clinic->name}}</td>
+                                <td>{{$education->college}}</td>
+                                <td>{{$education->degree}}</td>
+                                <td>{{$education->from}}</td>
+                                <td>{{$education->to}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$booking->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                     <a class="btn btn-danger btn-sm delete"  data-id="{{$booking->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm edit" data-id="{{$education->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-danger btn-sm delete"  data-id="{{$education->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
 						 @endforeach
@@ -99,18 +98,18 @@ $.ajaxSetup({
 $('.delete').click(function()
 {
     var id=$(this).attr("data-id");
-    this.deletebooking(id);
+    this.deleteeducation(id);
 });
 $('.edit').click(function()
 {
     var id=$(this).attr("data-id");
     console.log('edit button');
 });
-function deletebooking(id)
+function deleteeducation(id)
 {
     $.ajax({
         type: "delete",
-        url: "/booking/"+id,
+        url: "/education/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();

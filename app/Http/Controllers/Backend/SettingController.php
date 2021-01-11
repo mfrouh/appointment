@@ -10,7 +10,8 @@ class SettingController extends Controller
 {
     public function index()
     {
-       return view('backend.setting.index');
+       $setting=Setting::first();
+       return view('backend.setting.index',compact('setting'));
     }
 
     public function store(Request $request)
@@ -18,7 +19,7 @@ class SettingController extends Controller
        $this->validate($request,[
            'name'=>'required|max:50|min:3',
            'description'=>'required|min:3|max:100',
-           'logo'=>'required|image',
+           'logo'=>'nullable|image',
            'facebook'=>'nullable|url',
            'youtube'=>'nullable|url',
            'twitter'=>'nullable|url',

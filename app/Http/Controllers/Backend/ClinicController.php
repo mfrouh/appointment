@@ -15,7 +15,8 @@ class ClinicController extends Controller
      */
     public function index()
     {
-        return view('backend.clinic.index');
+        $clinics=Clinic::all();
+        return view('backend.clinic.index',compact('clinics'));
     }
 
     /**
@@ -45,9 +46,9 @@ class ClinicController extends Controller
         'country'=>'required|min:2|max:50',
         'time_appointment'=>'required|in:15,30,45,60',
         'price'=>'required|numeric',
-        'type_booking'=>'required|in:7,14,30'
+        'type_booking'=>'required|in:7,14,30',
         ]);
-        auth()->user()->clinic->create($request->all());
+        auth()->user()->clinic()->create($request->all());
         return back();
     }
 
@@ -83,15 +84,15 @@ class ClinicController extends Controller
     public function update(Request $request, Clinic $clinic)
     {
         $this->validate($request,[
-            'address'=>'required|min:8|max:50',
-            'clinic_name'=>'required|min:4|max:50',
-            'image'=>'required|image',
-            'city'=>'required|min:2|max:50',
-            'state'=>'required|min:2|max:50',
-            'country'=>'required|min:2|max:50',
-            'time_appointment'=>'required|in:15,30,45,60',
-            'price'=>'required|numeric',
-            'type_booking'=>'required|in:7,14,30'
+        'address'=>'required|min:8|max:50',
+        'clinic_name'=>'required|min:4|max:50',
+        'image'=>'nullable|image',
+        'city'=>'required|min:2|max:50',
+        'state'=>'required|min:2|max:50',
+        'country'=>'required|min:2|max:50',
+        'time_appointment'=>'required|in:15,30,45,60',
+        'price'=>'required|numeric',
+        'type_booking'=>'required|in:7,14,30'
         ]);
         $clinic->update($request->all());
         return back();
