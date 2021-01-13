@@ -27,7 +27,8 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        return view('backend.appointment.create');
+        $patients=auth()->user()->clinic->patients;
+        return view('backend.appointment.create',compact('patients'));
     }
 
     /**
@@ -42,8 +43,9 @@ class AppointmentController extends Controller
             'patient_id'=>'integer',
             'appointment_time_id'=>'integer',
             'price'=>'numeric',
-            'diagnose'=>'nullable|min:5|max:10',
+            'diagnose'=>'nullable|min:2|max:50',
         ]);
+        $request->merge(['booking'=>now()]);
         auth()->user()->clinic->appointments()->create($request->all());
         return back();
     }
@@ -67,7 +69,8 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        return view('backend.appointment.edit',compact('appointment'));
+        $patients=auth()->user()->clinic->patients;
+        return view('backend.appointment.edit',compact('appointment','patients'));
     }
 
     /**
@@ -83,8 +86,9 @@ class AppointmentController extends Controller
             'patient_id'=>'integer',
             'appointment_time_id'=>'integer',
             'price'=>'numeric',
-            'diagnose'=>'nullable|min:5|max:10',
+            'diagnose'=>'nullable|min:2|max:50',
         ]);
+        $request->merge(['booking'=>now()]);
         $appointment->update($request->all());
         return back();
     }
@@ -98,6 +102,6 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         $appointment->delete();
-        return back();
+        return response(200);
     }
 }

@@ -41,7 +41,7 @@ class PatientController extends Controller
           'phone_number'=>'required|max:11|min:11',
           'age'=>'integer',
           'gender'=>'required|in:female,male',
-          'name'=>'required|min:5|max:50'
+          'name'=>"required|max:50|unique:patients,name,null,id,phone_number,$request->phone_number,clinic_id,".auth()->user()->clinic->id,
         ]);
         auth()->user()->clinic->patients()->create($request->all());
         return back();
@@ -82,8 +82,8 @@ class PatientController extends Controller
             'phone_number'=>'required|max:11|min:11',
             'age'=>'integer',
             'gender'=>'required|in:female,male',
-            'name'=>'required|min:5|max:50'
-        ]);
+            'name'=>"required|max:50|unique:patients,name,null,id,phone_number,$request->phone_number,clinic_id,".auth()->user()->clinic->id,
+            ]);
         $patient->update($request->all());
         return back();
     }
@@ -97,6 +97,6 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         $patient->delete();
-        return back();
+        return response(200);
     }
 }

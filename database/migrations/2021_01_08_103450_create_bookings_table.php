@@ -22,8 +22,10 @@ class CreateBookingsTable extends Migration
             $table->string('verification_code')->nullable();
             $table->string('phone_number');
             $table->integer('age');
-            $table->foreignId('appointment_time_id');
-            $table->foreign('appointment_time_id')->references('id')->on('appointment_times')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('appointment_time_id')->nullable();
+            $table->foreign('appointment_time_id')->references('id')->on('appointment_times');
+            $table->date('day');
+            $table->time('time');
             $table->enum('gender',['male','female']);
             $table->timestamps();
         });

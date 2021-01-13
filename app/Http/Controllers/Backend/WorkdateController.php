@@ -16,9 +16,14 @@ class WorkdateController extends Controller
 
    public function store(Request $request)
    {
-      $this->validate($request,['day'=>'required|date','start'=>'required|time','end'=>'required|time']);
-      $date=auth()->user()->clinic->dates()->create($request->day);
-      $date->time()->sync(['start'=>$request->start,'end'=>$request->end]);
-      return back();
+      $this->validate($request,['day'=>'required|unique:work_dates,day,Null,id,clinic_id,'.auth()->user()->clinic->id,'start'=>'required|before_or_equal:end','end'=>'required|after_or_equal:start']);
+      $date=auth()->user()->clinic->workdates()->create(['day'=>$request->day]);
+      $date->time()->create(['start'=>$request->start,'end'=>$request->end]);
+      return response(200);
    }
+   public function destroy($id)
+    {
+      WorkDate::findOrfail($id)->delete();
+      return response(200);
+    }
 }

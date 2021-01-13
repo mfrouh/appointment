@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Education;
 use Illuminate\Http\Request;
 
 class EducationController extends Controller
@@ -17,11 +18,16 @@ class EducationController extends Controller
     {
        $this->validate($request,[
            'degree'=>'required:min:2|max:50',
-           'colloge'=>'required:min:2|max:50',
-           'from'=>'required|year',
-           'to'=>'required|year'
+           'college'=>'required:min:2|max:50',
+           'from'=>'required|numeric|before:to',
+           'to'=>'required|numeric|after:from'
            ]);
        auth()->user()->clinic->educations()->create($request->all());
-       return back();
+       return response(200);
+    }
+    public function destroy($id)
+    {
+      Education::findOrfail($id)->delete();
+      return response(200);
     }
 }

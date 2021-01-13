@@ -11,7 +11,7 @@ class AppointmentDate extends Model
     protected $table='appointment_dates';
 
     protected $fillable=['clinic_id','day'];
-
+    protected $casts=['day'=>'date'];
     public function times()
     {
         return $this->hasMany('App\Models\AppointmentTime');

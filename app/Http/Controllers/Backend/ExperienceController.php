@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Experience;
 use Illuminate\Http\Request;
 
 class ExperienceController extends Controller
@@ -17,10 +18,15 @@ class ExperienceController extends Controller
     {
        $this->validate($request,[
            'hospital_name'=>'required:min:2|max:50',
-           'from'=>'required|year',
-           'to'=>'required|year'
+           'from'=>'required|numeric|before:to',
+           'to'=>'required|numeric|after:from'
            ]);
        auth()->user()->clinic->experiences()->create($request->all());
-       return back();
+       return response(200);
+    }
+    public function destroy($id)
+    {
+      Experience::findOrfail($id)->delete();
+      return response(200);
     }
 }

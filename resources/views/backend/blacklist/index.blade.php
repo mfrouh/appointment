@@ -25,7 +25,24 @@
 @section('content')
 				<!-- row opened -->
  <div class="row row-sm">
- 	<div class="col-xl-12">
+    <div class="col-xl-4">
+	     <div class="card ">
+            <div class="card-header">أضافة رقم التلفون</div>
+            <div class="card-body">
+                <form id="form">
+                    <div class="form-group">
+                      <label for="">رقم التلفون</label>
+                      <input type="text" name="phone_number" id="phone_number" class="form-control" placeholder="أضافة رقم التلفون">
+                      <small id="helpId" class="text-muted"></small>
+                    </div>
+                    <div class="form-group text-center">
+                       <input type="submit" class="btn btn-primary" value="حفظ">
+                    </div>
+                </form>
+            </div>
+          </div>
+	</div>
+ 	<div class="col-xl-8">
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
@@ -37,7 +54,6 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
  								<th class="border-bottom-0">رقم التلفون</th>
  								<th class="border-bottom-0">الصلاحيات</th>
  							</tr>
@@ -45,10 +61,8 @@
  						<tbody>
 						 @foreach ($blacklists as $blacklist)
  							<tr>
- 								<td>{{$blacklist->clinic->name}}</td>
                                 <td>{{$blacklist->phone_number}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$blacklist->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$blacklist->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -89,21 +103,23 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+	 e.preventDefault();
     var id=$(this).attr("data-id");
-    this.deleteblacklist(id);
+    deleteblacklist(id);
 });
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+$('#form').submit(function(e){
+    e.preventDefault();
+    var data=$('#form').serialize();
+    createblacklist(data);
 });
+
 function deleteblacklist(id)
 {
     $.ajax({
         type: "delete",
-        url: "/blacklist/"+id,
+        url: "/clinic/blacklist/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -111,6 +127,23 @@ function deleteblacklist(id)
         error:function(response)
         {
 
+        }
+    });
+}
+function createblacklist(dat)
+{
+    $.ajax({
+        type: "post",
+        url: "/clinic/blacklist",
+        dataType: "json",
+        data:dat,
+        success: function (response) {
+            location.reload();
+        },
+        error:function(xhr, status, error)
+        {
+            var err = eval("(" + xhr.responseText + ")");
+            $('#helpId').html(err.errors['phone_number']);
         }
     });
 }

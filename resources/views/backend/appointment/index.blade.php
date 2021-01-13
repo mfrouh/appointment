@@ -37,8 +37,8 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
- 								<th class="border-bottom-0">المريض</th>
+                                <th class="border-bottom-0">المريض</th>
+                                <th class="border-bottom-0">يوم الكشف</th>
                                 <th class="border-bottom-0">وقت الكشف</th>
                                 <th class="border-bottom-0">وقت الحجز</th>
                                 <th class="border-bottom-0">السعر</th>
@@ -49,14 +49,14 @@
  						<tbody>
 						 @foreach ($appointments as $appointment)
  							<tr>
- 								<td>{{$appointment->clinic->name}}</td>
                                 <td>{{$appointment->patient->name}}</td>
+                                <td>{{$appointment->day}}</td>
+                                <td>{{$appointment->time}}</td>
                                 <td>{{$appointment->appointment_time_id}}</td>
-                                <td>{{$appointment->booking}}</td>
                                 <td>{{$appointment->price}}</td>
                                 <td>{{$appointment->dignose}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$appointment->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm edit" href="/appointment/{{$appointment->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$appointment->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -97,15 +97,11 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+    e.preventDefault();
     var id=$(this).attr("data-id");
-    this.deleteappointment(id);
-});
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+    deleteappointment(id);
 });
 function deleteappointment(id)
 {

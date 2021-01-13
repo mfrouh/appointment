@@ -69,6 +69,12 @@
                     </li>
                     <li class="slide">
 						<a class="side-menu__item" href="{{ url('/clinic/service' ) }}"><span class="side-menu__label">الخدمات</a>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item" href="{{ url('/reviews' ) }}"><span class="side-menu__label">الاراء</a>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item" href="{{ url('/gallery' ) }}"><span class="side-menu__label">الصور</a>
                     </li>
 				</ul>
 			</div>

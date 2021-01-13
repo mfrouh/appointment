@@ -26,7 +26,8 @@ class SurgeryController extends Controller
      */
     public function create()
     {
-        return view('backend.surgery.create');
+        $patients=auth()->user()->clinic->patients;
+        return view('backend.surgery.create',compact('patients'));
     }
 
     /**
@@ -42,7 +43,7 @@ class SurgeryController extends Controller
             'price'=>'required|numeric',
             'name'=>'required|min:4|max:40',
             'day'=>'required|date',
-            'time'=>'required|time',
+            'time'=>'required',
             'hospital_name'=>'required|min:2|max:50',
         ]);
         auth()->user()->clinic->surgeries()->create($request->all());
@@ -68,7 +69,8 @@ class SurgeryController extends Controller
      */
     public function edit(Surgery $surgery)
     {
-        return view('backend.surgery.edit',compact('surgery'));
+        $patients=auth()->user()->clinic->patients;
+        return view('backend.surgery.edit',compact('surgery','patients'));
     }
 
     /**
@@ -85,7 +87,7 @@ class SurgeryController extends Controller
             'price'=>'required|numeric',
             'name'=>'required|min:4|max:40',
             'day'=>'required|date',
-            'time'=>'required|time',
+            'time'=>'required',
             'hospital_name'=>'required|min:2|max:50',
         ]);
         $surgery->update($request->all());
@@ -102,6 +104,6 @@ class SurgeryController extends Controller
     public function destroy(Surgery $surgery)
     {
        $surgery->delete();
-       return back();
+       return response(200);
     }
 }

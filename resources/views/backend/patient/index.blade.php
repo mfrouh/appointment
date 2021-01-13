@@ -29,7 +29,8 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
- 					<h4 class="card-title mg-b-0">المرضي</h4>
+                     <h4 class="card-title mg-b-0">المرضي</h4>
+                     <a class="btn btn-primary btn-sm" href="javascript::void(0)"  data-toggle="modal" data-target="#createpatient">أضافة مريض</a>
  				</div>
  			</div>
  			<div class="card-body">
@@ -37,8 +38,8 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
- 								<th class="border-bottom-0">المريض</th>
+                                <th class="border-bottom-0">المريض</th>
+                                <th class="border-bottom-0">رقم التلفون</th>
                                 <th class="border-bottom-0">النوع</th>
                                 <th class="border-bottom-0">العمر</th>
  								<th class="border-bottom-0">الصلاحيات</th>
@@ -47,12 +48,12 @@
  						<tbody>
 						 @foreach ($patients as $patient)
  							<tr>
- 								<td>{{$patient->clinic->name}}</td>
                                 <td>{{$patient->name}}</td>
+                                <td>{{$patient->phone_number}}</td>
                                 <td>{{$patient->gender}}</td>
                                 <td>{{$patient->age}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$patient->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm" href="/patient/{{$patient->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$patient->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -66,6 +67,7 @@
  </div>
 </div>
 </div>
+<x-Patient.create/>
 @endsection
 @section('js')
 <!-- Internal Data tables -->
@@ -93,16 +95,18 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+    e.preventDefault();
     var id=$(this).attr("data-id");
-    this.deletepatient(id);
+    deletepatient(id);
 });
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+$('#createform').submit(function(e){
+    e.preventDefault();
+    var data=$('#createform').serialize();
+    createpatient(data);
 });
+
 function deletepatient(id)
 {
     $.ajax({
@@ -118,5 +122,27 @@ function deletepatient(id)
         }
     });
 }
+function createpatient(dat)
+{
+    $.ajax({
+        type: "post",
+        url: "/patient",
+		data:dat,
+        success: function (response) {
+            location.reload();
+        },
+        error:function(xhr, status, error)
+        {
+            var err = eval("(" + xhr.responseText + ")");
+             $.each(err.errors, function(index, value) {
+                $('#'+index).html('');
+             });
+             $.each(err.errors, function(index, value) {
+                $('#'+index).html(value);
+             });
+        }
+    });
+}
+
 </script>
 @endsection

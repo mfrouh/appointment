@@ -19,10 +19,12 @@ class CreateAppointmentsTable extends Migration
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('patient_id');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('appointment_time_id');
-            $table->foreign('appointment_time_id')->references('id')->on('appointment_times')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('booking_id')->nullable();
+            $table->foreign('booking_id')->references('id')->on('bookings');
             $table->dateTime('booking');
             $table->integer('price');
+            $table->date('day');
+            $table->time('time');
             $table->text('diagnose',255)->nullable();
             $table->timestamps();
         });

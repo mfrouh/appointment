@@ -15,7 +15,7 @@ class CreateClinicsTable extends Migration
     {
         Schema::create('clinics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('clinic_name');
             $table->string('image');
@@ -23,7 +23,7 @@ class CreateClinicsTable extends Migration
             $table->string('city');
             $table->string('state');
             $table->string('country');
-            $table->enum('time_appointment',['15','30','45','60'])->default('15');
+            $table->enum('time_appointment',['10','15','30','45','60'])->default('10');
             $table->integer('price');
             $table->enum('type_booking',['7','14','30'])->default('7');
             $table->timestamps();

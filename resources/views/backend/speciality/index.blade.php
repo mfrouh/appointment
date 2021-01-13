@@ -30,6 +30,7 @@
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
  					<h4 class="card-title mg-b-0">التخصصات</h4>
+					<a class="btn btn-primary btn-sm"  href="/speciality/create">أنشاء تخصص</a>
  				</div>
  			</div>
  			<div class="card-body">
@@ -50,7 +51,7 @@
                                 <td>{{$speciality->image}}</td>
                                 <td>{{$speciality->active}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$speciality->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm edit" data-id="{{$speciality->id}}" href="/speciality/{{$speciality->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$speciality->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -62,8 +63,7 @@
  		</div>
  	</div>
  </div>
-</div>
-</div>
+ {{-- <x-speciality.create/> --}}
 @endsection
 @section('js')
 <!-- Internal Data tables -->
@@ -85,19 +85,28 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 <!--Internal  Datatable js -->
 <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
-<script>
+{{-- <script>
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+	e.preventDefault();
     var id=$(this).attr("data-id");
     this.deletespeciality(id);
 });
-$('.edit').click(function()
+$('#createform').submit(function(e){
+    e.preventDefault();
+    var data=$('#createform').serialize();
+    alert(data);
+    createspeciality(data);
+});
+
+$('.edit').click(function(e)
 {
+	e.preventDefault();
     var id=$(this).attr("data-id");
     console.log('edit button');
 });
@@ -116,5 +125,29 @@ function deletespeciality(id)
         }
     });
 }
-</script>
+function createspeciality(dat)
+{
+    var form_data = new FormData($('#createform')[0]);
+    $.ajax({
+        type: "post",
+        url: "/speciality",
+		data:dat,
+        enctype: 'multipart/form-data',
+        processData: false,
+        success: function (response) {
+            location.reload();
+        },
+        error:function(xhr, status, error)
+        {
+            var err = eval("(" + xhr.responseText + ")");
+             $.each(err.errors, function(index, value) {
+                $('#'+index).html('');
+             });
+             $.each(err.errors, function(index, value) {
+                $('#'+index).html(value);
+             });
+        }
+    });
+}
+</script> --}}
 @endsection

@@ -17,15 +17,15 @@ class BlacklistController extends Controller
     public function store(Request $request)
     {
        $this->validate($request,
-       ['phone_number'=>'required|unique:black_lists,phone_number,Null,id,clinic_id,'.auth()->user()->clinic->id]
+       ['phone_number'=>'required|min:11|max:11|unique:black_lists,phone_number,Null,id,clinic_id,'.auth()->user()->clinic->id]
        );
        auth()->user()->clinic->blacklists()->create($request->all());
-       return back();
+       return response(200);
     }
 
     public function destroy($id)
     {
       BlackList::findOrfail($id)->delete();
-      return back();
+      return response(200);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppointmentDate;
+use App\Models\AppointmentTime;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings=Booking::all();
+        $bookings=Booking::where('clinic_id',auth()->user()->clinic->id)->where('verified',1)->get();
         return view('backend.booking.index',compact('bookings'));
     }
 
@@ -26,7 +28,8 @@ class BookingController extends Controller
      */
     public function create()
     {
-        return view('backend.appointment.create');
+        $dates=auth()->user()->clinic->appointmentdates;
+        return view('backend.booking.create',compact('dates'));
     }
 
     /**
@@ -38,16 +41,21 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'appointment_time_id'=>'integer',
+            'appointment_time_id'=>'nullable',
             'verified'=>'nullable|boolean',
             'verification_code'=>'nullable',
             'phone_number'=>'required|max:11|min:11',
             'age'=>'integer',
             'gender'=>'required|in:female,male',
-            'name'=>'required|min:5|max:50'
+            'name'=>'required|min:5|max:50',
+            'day'=>'required|date',
+            'time'=>'required',
         ]);
-        $request->verified=1;
+        $request->merge(['verified'=>1]);
         auth()->user()->clinic->bookings()->create($request->all());
+        if ($request->appointment_time_id) {
+            AppointmentTime::find($request->appointment_time_id)->update(['booked'=>1]);
+        }
         return back();
     }
 
@@ -59,7 +67,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('backend.appointment.show',compact('booking'));
+        return view('backend.booking.show',compact('booking'));
     }
 
     /**
@@ -70,7 +78,8 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        return view('backend.appointment.edit',compact('booking'));
+        $dates=auth()->user()->clinic->appointmentdates;
+        return view('backend.booking.edit',compact('booking','dates'));
     }
 
     /**
@@ -83,15 +92,21 @@ class BookingController extends Controller
     public function update(Request $request, Booking $booking)
     {
         $this->validate($request,[
-            'appointment_time_id'=>'integer',
+            'appointment_time_id'=>'nullable',
             'verified'=>'nullable|boolean',
             'verification_code'=>'nullable',
             'phone_number'=>'required|max:11|min:11',
             'age'=>'integer',
             'gender'=>'required|in:female,male',
-            'name'=>'required|min:5|max:50'
+            'name'=>'required|min:5|max:50',
+            'day'=>'required|date',
+            'time'=>'required'
         ]);
-        $request->verified=1;
+        if ($request->appointment_time_id!=$booking->appointment_time_id) {
+            AppointmentTime::find($booking->appointment_time_id)->update(['booked'=>0]);
+            AppointmentTime::find($request->appointment_time_id)->update(['booked'=>1]);
+        }
+        $request->merge(['verified'=>1]);
         $booking->update($request->all());
         return back();
     }
@@ -104,7 +119,10 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
+        if ($booking->appointment_time_id) {
+            AppointmentTime::find($booking->appointment_time_id)->update(['booked'=>0]);
+        }
        $booking->delete();
-       return back();
+       return response(200);
     }
 }

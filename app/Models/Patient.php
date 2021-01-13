@@ -9,7 +9,7 @@ class Patient extends Model
 {
     use HasFactory;
 
-    protected $table='bookings';
+    protected $table='patients';
 
     protected $fillable=['clinic_id','phone_number','age','gender','name'];
 

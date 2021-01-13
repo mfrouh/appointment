@@ -10,7 +10,7 @@ class Booking extends Model
     use HasFactory;
     protected $table='bookings';
 
-    protected $fillable=['clinic_id','appointment_time_id','verified','verification_code','phone_number','age','gender','name'];
+    protected $fillable=['clinic_id','time','day','appointment_time_id','verified','verification_code','phone_number','age','gender','name'];
 
     protected $casts=['verified'=>'boolean'];
 

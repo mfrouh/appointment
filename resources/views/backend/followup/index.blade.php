@@ -29,7 +29,8 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
- 					<h4 class="card-title mg-b-0">المتابعات</h4>
+                     <h4 class="card-title mg-b-0">المتابعات</h4>
+                     <a href="/followup/create" class="btn btn-primary  btn-sm"> انشاء متابعة</a>
  				</div>
  			</div>
  			<div class="card-body">
@@ -37,7 +38,6 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
  								<th class="border-bottom-0">المريض</th>
                                 <th class="border-bottom-0">يوم المتابعة</th>
                                 <th class="border-bottom-0">ساعة المتابعة</th>
@@ -49,14 +49,13 @@
  						<tbody>
 						 @foreach ($followups as $followup)
  							<tr>
- 								<td>{{$followup->clinic->name}}</td>
                                 <td>{{$followup->patient->name}}</td>
                                 <td>{{$followup->day}}</td>
                                 <td>{{$followup->time}}</td>
                                 <td>{{$followup->price}}</td>
-                                <td>{{$followup->dignose}}</td>
+                                <td>{{$followup->diagnose}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$followup->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm" href="/followup/{{$followup->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$followup->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -97,15 +96,11 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+    e.preventDefault();
     var id=$(this).attr("data-id");
-    this.deletefollowup(id);
-});
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+    deletefollowup(id);
 });
 function deletefollowup(id)
 {

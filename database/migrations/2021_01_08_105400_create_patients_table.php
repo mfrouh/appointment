@@ -21,6 +21,7 @@ class CreatePatientsTable extends Migration
             $table->string('phone_number');
             $table->integer('age');
             $table->enum('gender',['male','female']);
+            $table->unique(['clinic_id','phone_number','name']);
             $table->timestamps();
         });
     }

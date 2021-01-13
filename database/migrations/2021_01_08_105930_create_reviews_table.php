@@ -20,6 +20,7 @@ class CreateReviewsTable extends Migration
             $table->string('phone_number');
             $table->text('review')->nullable();
             $table->enum('rate',[1,2,3,4,5])->nullable();
+            $table->unique(['clinic_id','phone_number']);
             $table->timestamps();
         });
     }

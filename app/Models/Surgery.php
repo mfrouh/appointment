@@ -11,11 +11,15 @@ class Surgery extends Model
 
     protected $table='surgeries';
 
-    protected $fillable=['clinic_id','name','day','time','price','hospital_name'];
+    protected $fillable=['clinic_id','patient_id','name','day','time','price','hospital_name'];
 
     public function clinic()
     {
         return $this->belongsTo('App\Models\Clinic');
+    }
+    public function patient()
+    {
+        return $this->belongsTo('App\Models\Patient');
     }
 
 }

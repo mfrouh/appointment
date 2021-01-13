@@ -12,7 +12,6 @@ class AppointmentTime extends Model
     protected $table='appointment_times';
 
     protected $fillable=['appointment_date_id','time','booked'];
-
     protected $casts=['booked'=>'boolean'];
 
     public function date()

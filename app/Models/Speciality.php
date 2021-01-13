@@ -18,7 +18,9 @@ class Speciality extends Model
         parent::boot();
         static::saving(function ($model) {
             $model->slug = str_replace(' ','_',$model->name);
-            $model->image = sortimage('storage/specialities/',$model->image);
+            if (!is_string($model->image)) {
+                $model->image = sortimage('storage/specialities',$model->image);
+            }
         });
     }
     public function ScopeActive($q)

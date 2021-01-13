@@ -17,7 +17,7 @@ class CreatePrescriptionsTable extends Migration
             $table->id();
             $table->foreignId('clinic_id');
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('patient_id')->nullable();
+            $table->foreignId('patient_id');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->timestamps();

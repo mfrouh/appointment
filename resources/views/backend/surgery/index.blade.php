@@ -29,7 +29,8 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
- 					<h4 class="card-title mg-b-0">العمليات</h4>
+                     <h4 class="card-title mg-b-0">العمليات</h4>
+                     <a class="btn btn-primary btn-sm"  href="/surgery/create">انشاء عملية</a>
  				</div>
  			</div>
  			<div class="card-body">
@@ -37,8 +38,8 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
- 								<th class="border-bottom-0">المريض</th>
+                                <th class="border-bottom-0">المريض</th>
+                                <th class="border-bottom-0">اسم العملية</th>
                                 <th class="border-bottom-0">يوم العملية</th>
                                 <th class="border-bottom-0">وقت العملية</th>
                                 <th class="border-bottom-0">السعر</th>
@@ -49,14 +50,14 @@
  						<tbody>
 						 @foreach ($surgeries as $surgery)
  							<tr>
- 								<td>{{$surgery->clinic->name}}</td>
-                                <td>{{$surgery->patient->name}}</td>
+                                <td>{{$surgery->patient?$surgery->patient->name:null}}</td>
+                                <td>{{$surgery->name}}</td>
                                 <td>{{$surgery->day}}</td>
                                 <td>{{$surgery->time}}</td>
                                 <td>{{$surgery->price}}</td>
                                 <td>{{$surgery->hospital_name}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$surgery->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm"  href="/surgery/{{$surgery->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$surgery->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -97,15 +98,11 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+    e.preventDefault();
     var id=$(this).attr("data-id");
-    this.deletesurgery(id);
-});
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+    deletesurgery(id);
 });
 function deletesurgery(id)
 {

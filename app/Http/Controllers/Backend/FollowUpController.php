@@ -26,7 +26,8 @@ class FollowUpController extends Controller
      */
     public function create()
     {
-        return view('backend.followup.create');
+        $patients=auth()->user()->clinic->patients;
+        return view('backend.followup.create',compact('patients'));
     }
 
     /**
@@ -38,11 +39,11 @@ class FollowUpController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'patient_id'=>'integer',
+            'patient_id'=>'required|integer',
             'day'=>'required|date',
-            'time'=>'required|time',
-            'price'=>'numeric',
-            'diagnose'=>'nullable|min:5|max:10',
+            'time'=>'required',
+            'price'=>'nullable|numeric',
+            'diagnose'=>'nullable|min:5|max:80',
         ]);
         auth()->user()->clinic->followups()->create($request->all());
         return back();
@@ -54,7 +55,7 @@ class FollowUpController extends Controller
      * @param  \App\Models\FollowUp  $followUp
      * @return \Illuminate\Http\Response
      */
-    public function show(FollowUp $followUp)
+    public function show(FollowUp $followup)
     {
         return view('backend.followup.show',compact('followup'));
     }
@@ -65,9 +66,10 @@ class FollowUpController extends Controller
      * @param  \App\Models\FollowUp  $followUp
      * @return \Illuminate\Http\Response
      */
-    public function edit(FollowUp $followUp)
+    public function edit(FollowUp $followup)
     {
-        return view('backend.followup.edit',compact('followup'));
+        $patients=auth()->user()->clinic->patients;
+        return view('backend.followup.edit',compact('followup','patients'));
     }
 
     /**
@@ -77,16 +79,16 @@ class FollowUpController extends Controller
      * @param  \App\Models\FollowUp  $followUp
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FollowUp $followUp)
+    public function update(Request $request, FollowUp $followup)
     {
         $this->validate($request,[
-            'patient_id'=>'integer',
+            'patient_id'=>'required|integer',
             'day'=>'required|date',
-            'time'=>'required|time',
-            'price'=>'numeric',
-            'diagnose'=>'nullable|min:5|max:10',
+            'time'=>'required',
+            'price'=>'nullable|numeric',
+            'diagnose'=>'nullable|min:5|max:80',
         ]);
-        $followUp->update($request->all());
+        $followup->update($request->all());
         return back();
     }
 
@@ -96,9 +98,9 @@ class FollowUpController extends Controller
      * @param  \App\Models\FollowUp  $followUp
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FollowUp $followUp)
+    public function destroy(FollowUp $followup)
     {
-       $followUp->delete();
-       return back();
+       $followup->delete();
+       return response(200);
     }
 }

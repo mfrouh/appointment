@@ -25,7 +25,42 @@
 @section('content')
 				<!-- row opened -->
  <div class="row row-sm">
- 	<div class="col-xl-12">
+    <div class="col-xl-4">
+        <div class="card mg-b-20">
+            <div class="card-header pb-0">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title mg-b-0">ايام العمل</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="form">
+                <div class="form-group">
+                  <label for="">اليوم</label>
+                  <select name="day" class="form-control">
+                    @for ($i = 0; $i < 7; $i++)
+                       <option value="{{Carbon\Carbon::now()->addday($i)->format('D')}}">{{Carbon\Carbon::now()->addday($i)->format('D')}}</option>
+                    @endfor
+                  </select>
+                  <small id="day" class="text-muted"></small>
+                </div>
+                <div class="form-group">
+                  <label for="">بداية العمل</label>
+                  <input type="time" name="start" class="form-control" placeholder="بداية العمل" aria-describedby="start">
+                  <small id="start" class="text-muted"></small>
+                </div>
+                <div class="form-group">
+                    <label for="">نهاية العمل</label>
+                    <input type="time" name="end"  class="form-control" placeholder="نهاية العمل" aria-describedby="start">
+                    <small id="end" class="text-muted"></small>
+                </div>
+                <div class="form-group text-center">
+                  <input type="submit" class="btn btn-primary" value="حفظ" >
+                </div>
+               </form>
+            </div>
+        </div>
+    </div>
+ 	<div class="col-xl-8">
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
@@ -37,7 +72,6 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
                                 <th class="border-bottom-0">اليوم</th>
                                 <th class="border-bottom-0">بداية العمل</th>
                                 <th class="border-bottom-0">نهاية العمل</th>
@@ -47,12 +81,10 @@
  						<tbody>
 						 @foreach ($workdates as $workdate)
  							<tr>
- 								<td>{{$workdate->clinic->name}}</td>
                                 <td>{{$workdate->day}}</td>
                                 <td>{{$workdate->time->start}}</td>
                                 <td>{{$workdate->time->end}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$workdate->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$workdate->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -93,21 +125,22 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-$('.delete').click(function()
+$('.delete').click(function(e)
 {
+    e.preventDefault();
     var id=$(this).attr("data-id");
-    this.deleteworkdate(id);
+    deleteworkdate(id);
 });
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+$('#form').submit(function(e){
+    e.preventDefault();
+    var data=$('#form').serialize();
+    createworkdate(data);
 });
 function deleteworkdate(id)
 {
     $.ajax({
         type: "delete",
-        url: "/workdate/"+id,
+        url: "/clinic/workdate/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -118,5 +151,28 @@ function deleteworkdate(id)
         }
     });
 }
+function createworkdate(dat)
+{
+    $.ajax({
+        type: "post",
+        url: "/clinic/workdate",
+        dataType: "json",
+        data:dat,
+        success: function (response) {
+            location.reload();
+        },
+        error:function(xhr, status, error)
+        {
+            var err = eval("(" + xhr.responseText + ")");
+            $.each(err.errors, function(index, value) {
+                $('#'+index).html('');
+             });
+             $.each(err.errors, function(index, value) {
+                $('#'+index).html(value);
+             });
+        }
+    });
+}
+
 </script>
 @endsection

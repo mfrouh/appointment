@@ -77,8 +77,8 @@ class SpecialityController extends Controller
     public function update(Request $request, Speciality $speciality)
     {
         $this->validate($request,[
-         'name'=>'required|unique:specialities,id,'.$speciality->id,
-         'image'=>'required|image',
+         'name'=>'required|unique:specialities,name,'.$speciality->id,
+         'image'=>'nullable|image',
          'active'=>'boolean'
         ]);
         $speciality->update($request->all());
