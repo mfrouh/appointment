@@ -32,6 +32,10 @@
 						<a class="side-menu__item" href="{{ url('/clinic' ) }}"><span class="side-menu__label">العيادات</a>
                     </li>
                     <li class="slide">
+						<a class="side-menu__item" href="{{ url('/myclinic' ) }}"><span class="side-menu__label">عيادتي</a>
+                    </li>
+                    @if(auth()->user()->clinic)
+                    <li class="slide">
 						<a class="side-menu__item" href="{{ url('/booking' ) }}"><span class="side-menu__label">الحجوزات</a>
                     </li>
                     <li class="slide">
@@ -50,32 +54,9 @@
 						<a class="side-menu__item" href="{{ url('/prescription' ) }}"><span class="side-menu__label">الروشيتات</a>
                     </li>
                     <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/blacklist' ) }}"><span class="side-menu__label">القائمة السوداء</a>
+						<a class="side-menu__item" href="{{ url('/settings' ) }}"><span class="side-menu__label">الاعدادات</a>
                     </li>
-                    <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/appointmentdate' ) }}"><span class="side-menu__label">مواعيد الحجوزات</a>
-                    </li>
-                    <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/workdate' ) }}"><span class="side-menu__label">ايام العمل</a>
-                    </li>
-                    <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/social' ) }}"><span class="side-menu__label">التواصل الاجتماعي للعيادة</a>
-                    </li>
-                    <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/education' ) }}"><span class="side-menu__label">التعليم</a>
-                    </li>
-                    <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/experience' ) }}"><span class="side-menu__label">الخبرات</a>
-                    </li>
-                    <li class="slide">
-						<a class="side-menu__item" href="{{ url('/clinic/service' ) }}"><span class="side-menu__label">الخدمات</a>
-					</li>
-					<li class="slide">
-						<a class="side-menu__item" href="{{ url('/reviews' ) }}"><span class="side-menu__label">الاراء</a>
-					</li>
-					<li class="slide">
-						<a class="side-menu__item" href="{{ url('/gallery' ) }}"><span class="side-menu__label">الصور</a>
-                    </li>
+                    @endif
 				</ul>
 			</div>
 		</aside>

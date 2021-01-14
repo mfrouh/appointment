@@ -16,7 +16,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments=Appointment::all();
+        $appointments=auth()->user()->clinic->appointments;
         return view('backend.appointment.index',compact('appointments'));
     }
 
@@ -40,10 +40,12 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'patient_id'=>'integer',
-            'appointment_time_id'=>'integer',
-            'price'=>'numeric',
+            'patient_id'=>'required|integer',
+            'appointment_time_id'=>'nullable|integer',
+            'price'=>'required|numeric',
             'diagnose'=>'nullable|min:2|max:50',
+            'day'=>'required|date',
+            'time'=>'required',
         ]);
         $request->merge(['booking'=>now()]);
         auth()->user()->clinic->appointments()->create($request->all());
@@ -83,10 +85,12 @@ class AppointmentController extends Controller
     public function update(Request $request, Appointment $appointment)
     {
         $this->validate($request,[
-            'patient_id'=>'integer',
-            'appointment_time_id'=>'integer',
-            'price'=>'numeric',
+            'patient_id'=>'required|integer',
+            'appointment_time_id'=>'nullable|integer',
+            'price'=>'required|numeric',
             'diagnose'=>'nullable|min:2|max:50',
+            'day'=>'required|date',
+            'time'=>'required',
         ]);
         $request->merge(['booking'=>now()]);
         $appointment->update($request->all());

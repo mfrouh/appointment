@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FollowUp;
 use Illuminate\Http\Request;
 
-class FollowUpController extends Controller
+class FollowupController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -82,7 +82,7 @@ class PatientController extends Controller
             'phone_number'=>'required|max:11|min:11',
             'age'=>'integer',
             'gender'=>'required|in:female,male',
-            'name'=>"required|max:50|unique:patients,name,null,id,phone_number,$request->phone_number,clinic_id,".auth()->user()->clinic->id,
+            'name'=>"required|max:50|unique:patients,name,$patient->id,id,phone_number,$request->phone_number,clinic_id,".auth()->user()->clinic->id,
             ]);
         $patient->update($request->all());
         return back();

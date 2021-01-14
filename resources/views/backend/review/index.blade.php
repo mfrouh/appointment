@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-الكشوفات
+الاراء
 @endsection
 @section('css')
 <!-- Internal Data table css -->
@@ -16,7 +16,7 @@
   <div class="breadcrumb-header justify-content-between">
 	<div class="my-auto">
 		<div class="d-flex">
-			<h4 class="content-title mb-0 my-auto">الكشوفات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"></span>
+			<h4 class="content-title mb-0 my-auto">الاراء</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"></span>
 		</div>
 	</div>
   </div>
@@ -29,8 +29,7 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
-                     <h4 class="card-title mg-b-0">الكشوفات</h4>
-                     <a href="/appointment/create" class="btn btn-primary btn-sm">انشاء كشف</a>
+                     <h4 class="card-title mg-b-0">الاراء</h4>
  				</div>
  			</div>
  			<div class="card-body">
@@ -38,28 +37,19 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
-                                <th class="border-bottom-0">المريض</th>
-                                <th class="border-bottom-0">يوم الكشف</th>
-                                <th class="border-bottom-0">وقت الكشف</th>
-                                <th class="border-bottom-0">وقت الحجز</th>
-                                <th class="border-bottom-0">السعر</th>
-                                <th class="border-bottom-0">التشخيص</th>
- 								<th class="border-bottom-0">الصلاحيات</th>
+                                <th class="border-bottom-0">رقم التلفون</th>
+                                <th class="border-bottom-0">الرأي</th>
+                                <th class="border-bottom-0">التقييم</th>
+                                <th class="border-bottom-0">التاريخ</th>
  							</tr>
  						</thead>
  						<tbody>
-						 @foreach ($appointments as $appointment)
+						 @foreach ($reviews as $review)
  							<tr>
-                                <td>{{$appointment->patient->name}}</td>
-                                <td>{{$appointment->day}}</td>
-                                <td>{{$appointment->time}}</td>
-                                <td>{{$appointment->appointment_time_id}}</td>
-                                <td>{{$appointment->price}}</td>
-                                <td>{{$appointment->dignose}}</td>
- 								<td>
-                                     <a class="btn btn-primary btn-sm edit" href="/appointment/{{$appointment->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                     <a class="btn btn-danger btn-sm delete"  data-id="{{$appointment->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
+                                <td>{{$review->phone_number}}</td>
+                                <td>{{$review->review}}</td>
+                                <td>{{$review->rate}}</td>
+                                <td>{{$review->created_at->format('d-m-Y')}}</td>
  							</tr>
 						 @endforeach
  						</tbody>
@@ -92,32 +82,4 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 <!--Internal  Datatable js -->
 <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
-<script>
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$('.delete').click(function(e)
-{
-    e.preventDefault();
-    var id=$(this).attr("data-id");
-    deleteappointment(id);
-});
-function deleteappointment(id)
-{
-    $.ajax({
-        type: "delete",
-        url: "/appointment/"+id,
-        dataType: "json",
-        success: function (response) {
-            location.reload();
-        },
-        error:function(response)
-        {
-
-        }
-    });
-}
-</script>
 @endsection

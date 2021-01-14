@@ -17,41 +17,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //$appointment=['id'=>1,'code'=>'16547','is_verify'=>'0','name'=>'mohamed frouh','time'=>now()->diffForHumans()];
-    // event(new BookingVerifyEvent($appointment));
-    // event(new BookingSuccessEvent($appointment));
     return view('welcome');
 });
-Route::group(['middleware' => ['auth']], function () {
-Route::get('/clinic/appointmentdate','Backend\AppointmentDateController@index');
-Route::post('/clinic/appointmentdate','Backend\AppointmentDateController@store');
-Route::get('/clinic/appointmentdate/{id}','Backend\AppointmentDateController@times');
-
+Route::group(['middleware' => ['auth','Hasclinic']], function () {
+Route::get('/clinic/appointmentdate','Backend\AppointmentdateController@index');
+Route::post('/clinic/appointmentdate','Backend\AppointmentdateController@store');
+Route::get('/clinic/appointmentdate/{id}','Backend\AppointmentdateController@times');
+Route::get('/myclinic','Backend\DoctorController@myclinic');
+Route::get('/settings','Backend\DoctorController@settings');
 //
-Route::get('/clinic/workdate','Backend\WorkDateController@index');
-Route::post('/clinic/workdate','Backend\WorkDateController@store');
-Route::delete('/clinic/workdate/{id}','Backend\WorkDateController@destroy');
-//
-Route::get('/clinic/education','Backend\EducationController@index');
-Route::post('/clinic/education','Backend\EducationController@store');
-Route::delete('/clinic/education/{id}','Backend\EducationController@destroy');
-//
-Route::get('/clinic/experience','Backend\ExperienceController@index');
-Route::post('/clinic/experience','Backend\ExperienceController@store');
-Route::delete('/clinic/experience/{id}','Backend\ExperienceController@destroy');
-//
-Route::get('/clinic/service','Backend\ServiceController@index');
-Route::post('/clinic/service','Backend\ServiceController@store');
-Route::delete('/clinic/service/{id}','Backend\ServiceController@destroy');
-//
-Route::get('/clinic/blacklist','Backend\BlacklistController@index');
-Route::post('/clinic/blacklist','Backend\BlacklistController@store');
-Route::delete('/clinic/blacklist/{id}','Backend\BlacklistController@destroy');
+$models=['workdate','education','experience','service','blacklist','gallery'];
+foreach ($models as $key => $model) {
+   Route::get('/clinic/'.$model,"Backend\\".$model."Controller@index")->name($model.'.index');
+   Route::post('/clinic/'.$model,"Backend\\".$model."Controller@store")->name($model.'.store');
+   Route::delete('/clinic/'.$model.'/{id}',"Backend\\".$model."Controller@destroy")->name($model.'.destroy');
+}
 //
 Route::get('/clinic/social','Backend\SocialController@index');
 Route::post('/clinic/social','Backend\SocialController@store');
+Route::get('/clinic/reviews','Backend\DoctorController@reviews');
 Route::get('/setting','Backend\SettingController@index');
 Route::post('/setting','Backend\SettingController@store');
+//
 Route::resource('speciality', 'Backend\SpecialityController');
 Route::resource('patient', 'Backend\PatientController');
 Route::resource('surgery', 'Backend\SurgeryController');
@@ -59,7 +46,15 @@ Route::resource('prescription', 'Backend\PrescriptionController');
 Route::resource('booking', 'Backend\BookingController');
 Route::resource('appointment', 'Backend\AppointmentController');
 Route::resource('clinic', 'Backend\ClinicController');
-Route::resource('followup', 'Backend\FollowUpController');
+Route::resource('followup', 'Backend\FollowupController');
+});
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/myclinic','Backend\DoctorController@myclinic');
+    Route::resource('clinic', 'Backend\ClinicController')->only(['store','create']);
+    Route::get('/change-password','Backend\SettingController@change_password');
+    Route::post('/change-password','Backend\SettingController@post_change_password');
+    Route::get('/profile-setting','Backend\SettingController@profile_setting');
+    Route::post('/profile-setting','Backend\SettingController@post_profile_setting');
 });
 Auth::routes();
 Route::get('/verify',[App\Http\Controllers\Frontend\AppointmentController::class,'verify']);
