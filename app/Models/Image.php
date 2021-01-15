@@ -17,5 +17,14 @@ class Image extends Model
     {
        return $this->morphTo();
     }
+    public static function boot()
+    {
+        parent::boot();
+        static::saving(function ($model) {
+            if (!is_string($model->url)) {
+                $model->url = sortimage('storage/clinic',$model->url);
+            }
+        });
+    }
 
 }

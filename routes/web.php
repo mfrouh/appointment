@@ -36,8 +36,16 @@ foreach ($models as $key => $model) {
 Route::get('/clinic/social','Backend\SocialController@index');
 Route::post('/clinic/social','Backend\SocialController@store');
 Route::get('/clinic/reviews','Backend\DoctorController@reviews');
+route::post('/clinic/prescriptioncontent','Backend\PrescriptionController@validatecontent');
+route::delete('/clinic/prescriptioncontent/{id}','Backend\PrescriptionController@deleteitem');
 Route::get('/setting','Backend\SettingController@index');
 Route::post('/setting','Backend\SettingController@store');
+Route::post('/doctor/prescription','Backend\DoctortopatientController@prescription');
+Route::post('/doctor/surgery','Backend\DoctortopatientController@surgery');
+Route::post('/doctor/appointment','Backend\DoctortopatientController@appointment');
+Route::post('/doctor/followup','Backend\DoctortopatientController@followup');
+
+
 //
 Route::resource('speciality', 'Backend\SpecialityController');
 Route::resource('patient', 'Backend\PatientController');

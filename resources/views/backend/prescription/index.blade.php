@@ -29,7 +29,8 @@
  		<div class="card mg-b-20">
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
- 					<h4 class="card-title mg-b-0">الروشيتات</h4>
+                     <h4 class="card-title mg-b-0">الروشيتات</h4>
+                     <a class="btn btn-primary btn-sm" href="/prescription/create">انشاء روشتة</a>
  				</div>
  			</div>
  			<div class="card-body">
@@ -37,7 +38,6 @@
  					<table id="example1" class="table key-buttons text-md-nowrap text-center">
  						<thead>
  							<tr>
- 								<th class="border-bottom-0">العيادة</th>
  								<th class="border-bottom-0">المريض</th>
  								<th class="border-bottom-0">الصلاحيات</th>
  							</tr>
@@ -45,10 +45,9 @@
  						<tbody>
 						 @foreach ($prescriptions as $prescription)
  							<tr>
- 								<td>{{$prescription->clinic->name}}</td>
                                 <td>{{$prescription->patient->name}}</td>
  								<td>
-                                     <a class="btn btn-primary btn-sm edit" data-id="{{$prescription->id}}" href="javscript::void(0)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                     <a class="btn btn-primary btn-sm edit"  href="/prescription/{{$prescription->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$prescription->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
  							</tr>
@@ -92,12 +91,7 @@ $.ajaxSetup({
 $('.delete').click(function()
 {
     var id=$(this).attr("data-id");
-    this.deleteprescription(id);
-});
-$('.edit').click(function()
-{
-    var id=$(this).attr("data-id");
-    console.log('edit button');
+    deleteprescription(id);
 });
 function deleteprescription(id)
 {

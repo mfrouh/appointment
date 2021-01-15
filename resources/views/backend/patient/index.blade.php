@@ -53,6 +53,7 @@
                                 <td>{{$patient->gender}}</td>
                                 <td>{{$patient->age}}</td>
  								<td>
+                                     <a class="btn btn-success btn-sm" href="/patient/{{$patient->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                      <a class="btn btn-primary btn-sm" href="/patient/{{$patient->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$patient->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>

@@ -15,7 +15,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-       $patients=Patient::all();
+       $patients=Patient::where('clinic_id',auth()->user()->clinic->id)->get();
        return view('backend.patient.index',compact('patients'));
     }
 

@@ -18,8 +18,8 @@ class CreatePrescriptionContentsTable extends Migration
             $table->foreignId('prescription_id');
             $table->foreign('prescription_id')->references('id')->on('prescriptions')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
-            $table->integer('quatity');
-            $table->text('message');
+            $table->integer('quantity');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
