@@ -33,10 +33,10 @@
 						<a class="side-menu__item" href="{{ url('/clinic' ) }}"><span class="side-menu__label">العيادات</a>
                     </li>
                     @endif
+                    @if(auth()->user()->clinic && auth()->user()->role=='doctor')
                     <li class="slide">
 						<a class="side-menu__item" href="{{ url('/myclinic' ) }}"><span class="side-menu__label">عيادتي</a>
                     </li>
-                    @if(auth()->user()->clinic)
                     <li class="slide">
 						<a class="side-menu__item" href="{{ url('/booking' ) }}"><span class="side-menu__label">الحجوزات</a>
                     </li>

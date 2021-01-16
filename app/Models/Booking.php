@@ -22,4 +22,12 @@ class Booking extends Model
     {
         return $this->belongsTo('App\Models\Clinic');
     }
+    public function ScopeActive($q)
+    {
+        $q->where('verified',1);
+    }
+    public function ScopeInActive($q)
+    {
+        $q->where('verified',0);
+    }
 }

@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth','Checkrole:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard','Backend\DashboardController@index');
     Route::get('/change-password','Backend\SettingController@change_password');
     Route::post('/change-password','Backend\SettingController@post_change_password');
     Route::get('/profile-setting','Backend\SettingController@profile_setting');
