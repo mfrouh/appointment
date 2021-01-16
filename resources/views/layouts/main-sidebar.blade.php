@@ -25,12 +25,14 @@
 					<li class="slide">
 						<a class="side-menu__item" href="{{ url('/dashboard' ) }}"><span class="side-menu__label">الرئيسية</a>
                     </li>
+                    @if(auth()->user()->role=='admin')
                     <li class="slide">
 						<a class="side-menu__item" href="{{ url('/speciality' ) }}"><span class="side-menu__label">التخصصات</a>
                     </li>
                     <li class="slide">
 						<a class="side-menu__item" href="{{ url('/clinic' ) }}"><span class="side-menu__label">العيادات</a>
                     </li>
+                    @endif
                     <li class="slide">
 						<a class="side-menu__item" href="{{ url('/myclinic' ) }}"><span class="side-menu__label">عيادتي</a>
                     </li>

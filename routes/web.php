@@ -2,6 +2,7 @@
 
 use App\Events\BookingSuccessEvent;
 use App\Events\BookingVerifyEvent;
+use App\Http\Middleware\Checkrole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['middleware' => ['auth','Hasclinic']], function () {
+Route::group(['middleware' => ['auth','Hasclinic','Checkrole:doctor']], function () {
 Route::get('/clinic/appointmentdate','Backend\AppointmentdateController@index');
 Route::post('/clinic/appointmentdate','Backend\AppointmentdateController@store');
 Route::get('/clinic/appointmentdate/{id}','Backend\AppointmentdateController@times');
@@ -38,27 +39,34 @@ Route::post('/clinic/social','Backend\SocialController@store');
 Route::get('/clinic/reviews','Backend\DoctorController@reviews');
 route::post('/clinic/prescriptioncontent','Backend\PrescriptionController@validatecontent');
 route::delete('/clinic/prescriptioncontent/{id}','Backend\PrescriptionController@deleteitem');
+route::post('/prescriptioncontent','Backend\PrescriptioncontentController@validatecontent');
+route::delete('/prescriptioncontent/{id}','Backend\PrescriptioncontentController@deleteitem');
 Route::get('/setting','Backend\SettingController@index');
 Route::post('/setting','Backend\SettingController@store');
 Route::post('/doctor/prescription','Backend\DoctortopatientController@prescription');
 Route::post('/doctor/surgery','Backend\DoctortopatientController@surgery');
 Route::post('/doctor/appointment','Backend\DoctortopatientController@appointment');
 Route::post('/doctor/followup','Backend\DoctortopatientController@followup');
-
-
 //
-Route::resource('speciality', 'Backend\SpecialityController');
-Route::resource('patient', 'Backend\PatientController');
-Route::resource('surgery', 'Backend\SurgeryController');
-Route::resource('prescription', 'Backend\PrescriptionController');
-Route::resource('booking', 'Backend\BookingController');
-Route::resource('appointment', 'Backend\AppointmentController');
-Route::resource('clinic', 'Backend\ClinicController');
-Route::resource('followup', 'Backend\FollowupController');
+Route::resource('patient', 'Backend\PatientController')->except('create');
+Route::resource('surgery', 'Backend\SurgeryController')->except('show');
+Route::resource('prescription', 'Backend\PrescriptionController')->except('show');
+Route::resource('booking', 'Backend\BookingController')->except('show');
+Route::resource('appointment', 'Backend\AppointmentController')->except('show');
+Route::resource('followup', 'Backend\FollowupController')->except('show');
 });
-Route::group(['middleware' => ['auth']], function () {
+
+Route::group(['middleware' => ['auth','Checkrole:doctor']], function () {
     Route::get('/myclinic','Backend\DoctorController@myclinic');
-    Route::resource('clinic', 'Backend\ClinicController')->only(['store','create']);
+    Route::resource('clinic', 'Backend\ClinicController')->only(['store','create','edit','update']);
+});
+
+Route::group(['middleware' => ['auth','Checkrole:admin']], function () {
+    Route::resource('speciality', 'Backend\SpecialityController');
+    Route::resource('clinic', 'Backend\ClinicController')->only('index');
+});
+
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/change-password','Backend\SettingController@change_password');
     Route::post('/change-password','Backend\SettingController@post_change_password');
     Route::get('/profile-setting','Backend\SettingController@profile_setting');
