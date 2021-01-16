@@ -62,8 +62,10 @@ class AppointmentController extends Controller
     public function verify(Request $request )
     {
         $this->validate($request,['code'=>'required|max:6|min:6','id'=>'required']);
-        if (Booking::where('id',$request->id)->where('verification_code',$request->code)->count()==1) {
+        $booking=Booking::where('id',$request->id)->where('verification_code',$request->code);
+        if ($booking->count()==1) {
            Booking::find($request->id)->update(['verified'=>1]);
+           AppointmentTime::find($booking->first()->appointment_time_id)->update(['booked'=>1]);
            return view('frontend.pages.success');
         }
         return back()->with('error','the code is wrong');
