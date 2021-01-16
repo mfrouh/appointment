@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','Frontend\PageController@index');
+Route::get('/clinics','Frontend\PageController@clinics');
+Route::get('/profile/{id}','Frontend\PageController@profile');
+Route::get('/bookappointment/{id}','Frontend\AppointmentController@booking');
+Route::post('/bookappointment','Frontend\AppointmentController@store');
+Route::get('/bookappointment/times/{id}','Frontend\AppointmentController@times');
+Route::get('/verifybooking','Frontend\AppointmentController@verifybooking')->name('verifybooking');
+Route::post('/verifybooking','Frontend\AppointmentController@verify');
 Route::group(['middleware' => ['auth','Hasclinic','Checkrole:doctor']], function () {
 Route::get('/clinic/appointmentdate','Backend\AppointmentdateController@index');
 Route::post('/clinic/appointmentdate','Backend\AppointmentdateController@store');
