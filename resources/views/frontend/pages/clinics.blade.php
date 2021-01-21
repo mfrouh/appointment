@@ -6,13 +6,13 @@
 <div id="results">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <h4><strong>Showing 10</strong> of 140 results</h4>
+            <div class="col-md-6 text-right">
+                <h4><strong>شاهد 10</strong> من 123 نتائج</h4>
             </div>
             <div class="col-md-6">
                  <div class="search_bar_list">
-                 <input type="text" class="form-control" placeholder="Clinic">
-                 <input type="submit" value="Search">
+                 <input type="text" class="form-control" placeholder="عيادة">
+                 <input type="submit" value="بحث">
              </div>
             </div>
         </div>
@@ -30,17 +30,15 @@
                      <div class="box_list fadeIn">
                          <figure>
                              <a href="/profile/{{$clinic->id}}"><img src="{{asset($clinic->image)}}" class="img-fluid" alt="">
-                                 <div class="preview"><span>Read more</span></div>
+                                 <div class="preview"><span>اقرأ المزيد</span></div>
                              </a>
                          </figure>
-                         <div class="wrapper">
+                         <div class="wrapper text-right">
                              <small>Psicologist</small>
                              <h3>{{$clinic->user->name}}</h3>
                              <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>({{$clinic->reviews->count()}})</small></span>
                          </div>
-                         <ul>
-                             <li><a href="/bookappointment/{{$clinic->id}}">Book now</a></li>
-                         </ul>
+                         <a href="/bookappointment/{{$clinic->id}}" class=" btn_1 m-2">احجز الان</a>
                      </div>
                  </div>
                  @endforeach

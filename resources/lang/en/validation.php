@@ -193,5 +193,6 @@ return [
         'phone_number'          => 'رقم التلفون',
         'start'                 => 'بداية العمل',
         'end'                   => 'نهاية العمل',
+        'appointment_time_id'   => 'وقت الكشف',
     ],
 ];

@@ -4,7 +4,7 @@
 <div id="hero_register">
     <div class="container margin_120_95">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 text-right">
                 <h1>It's time to find you!</h1>
                 <div class="box_feat_2">
                     <i class="pe-7s-map-2"></i>
@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-12 ">
                                 <div class="form-group">
-                                    <input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" placeholder="الاسم" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -43,7 +43,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    <input id="email" type="email" placeholder="البريد الالكتروني" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <input id="password" type="password"  placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password"  placeholder="كلمة السر" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -66,14 +66,14 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <input id="password-confirm" type="password" class="form-control" placeholder="Password Confirmation" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control" placeholder="تاكيد كلمة السر" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center add_top_30"><input type="submit" class="btn_1" value="Submit"></p>
+                        <p class="text-center add_top_30"><input type="submit" class="btn_1" value="انشاء"></p>
                     </form>
-                    <p class="text-center link_bright">Do have an account ? <a href="{{route('login')}}"><strong>Login now!</strong></a></p>
+                    <p class="text-center link_bright">لديك حساب ؟ <a href="{{route('login')}}"><strong>ادخل الان</strong></a></p>
                 </div>
                 <!-- /box_form -->
             </div>

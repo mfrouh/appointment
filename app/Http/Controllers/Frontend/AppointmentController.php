@@ -37,23 +37,23 @@ class AppointmentController extends Controller
         $time=AppointmentTime::find($request->appointment_time_id);
         $day=$time->AppointmentDate->day;
         $request->merge(['day'=>$day,'time'=>$time->time,'verification_code'=>rand(100000,999999)]);
-        if (Booking::where('appointment_time_id',$request->appointment_time_id)->count()==0) {
+        if (Booking::where('verified',0)->where('appointment_time_id',$request->appointment_time_id)->count()==0) {
           $booking=Booking::create($request->all());
           $id=$booking->id;
           $phone_number=$booking->phone_number;
           $verification_code=$booking->verification_code;
-        $basic  = new \Nexmo\Client\Credentials\Basic('22ccdc4d', 'bJdeW7jxphJ1xLga');
-        $client = new \Nexmo\Client($basic);
+        //    $basic  = new \Nexmo\Client\Credentials\Basic('22ccdc4d', 'bJdeW7jxphJ1xLga');
+        //    $client = new \Nexmo\Client($basic);
 
-        $message = $client->message()->send([
-            'to' => '201289189978',
-            'from' => 'mohamed frouh',
-            'text' => $verification_code,
-        ]);
-            // return redirect()->route('verifybooking')->with(['id'=>$id,'phone_number'=>$phone_number]);
-            return view('frontend.pages.verify',compact('id','phone_number'));
+        // $message = $client->message()->send([
+        //     'to' => '201289189978',
+        //     'from' => 'mohamed frouh',
+        //     'text' => $verification_code,
+        // ]);
+            return redirect()->route('verifybooking')->with(['id'=>$id,'phone_number'=>$phone_number]);
+           // return view('frontend.pages.verify',compact('id','phone_number'));
         }
-        return back()->with('error','this time is booked');
+        return back()->with(['phone_number'=>$request->phone_number,'gender'=>$request->gender,'age'=>$request->age,'name'=>$request->name,'error'=>'هذاالوقت محجوز']);
     }
     public function verifybooking()
     {
@@ -68,6 +68,6 @@ class AppointmentController extends Controller
            AppointmentTime::find($booking->first()->appointment_time_id)->update(['booked'=>1]);
            return view('frontend.pages.success');
         }
-        return back()->with('error','the code is wrong');
+        return back()->with(['id'=>$request->id,'code'=>$request->code,'error'=>'هذا الكود خطئ']);
     }
 }

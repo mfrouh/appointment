@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container margin_120">
+<div class="container-fluid margin_120 hero_home version_1" >
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div id="confirm">
@@ -12,7 +12,7 @@
                         </g>
                     </svg>
                 </div>
-            <h2>Thanks for your booking!</h2>
+             <h2 class="text-white">حجزك تم بنجاح</h2>
             </div>
         </div>
     </div>

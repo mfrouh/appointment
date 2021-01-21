@@ -102,7 +102,7 @@ class BookingController extends Controller
             'day'=>'required|date',
             'time'=>'required'
         ]);
-        if ($request->appointment_time_id!=$booking->appointment_time_id) {
+        if ($request->appointment_time_id && $request->appointment_time_id!=$booking->appointment_time_id) {
             AppointmentTime::find($booking->appointment_time_id)->update(['booked'=>0]);
             AppointmentTime::find($request->appointment_time_id)->update(['booked'=>1]);
         }

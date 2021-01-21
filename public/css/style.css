@@ -5,7 +5,7 @@ Theme URI: http://www.ansonika.com/findoctor/
 Author: Ansonika
 Author URI: http://themeforest.net/user/Ansonika/
 
-[Table of contents] 
+[Table of contents]
 
 1. SITE STRUCTURE and TYPOGRAPHY
 - 1.1 Typography
@@ -534,7 +534,7 @@ header.static {
 }
 
 ul#top_access {
-  float: right;
+  float: left;
   position: relative;
   top: 3px;
   margin: -1px 0 0 0;
@@ -1082,7 +1082,7 @@ ul#additional_links li:after {
   -webkit-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  right: 0;
+  left: 0;
   color: #fff;
   font-weight: 600;
   font-size: 16px;
@@ -1143,7 +1143,7 @@ ul#additional_links li:after {
 .box_feat span {
   position: absolute;
   top: 50%;
-  right: -48px;
+  left: -48px;
   margin: -42px 0 0 0;
   width: 70px;
   height: 70px;
@@ -1709,7 +1709,7 @@ iframe {
 }
 .search_bar_list input[type='submit'] {
   position: absolute;
-  right: -1px;
+  left: -1px;
   color: #fff;
   font-weight: 600;
   top: 0;
@@ -3768,6 +3768,7 @@ a.social_bt.linkedin:before {
 
 .box_general_3.cart label {
   font-weight: 500;
+  float: right;
 }
 
 .message {

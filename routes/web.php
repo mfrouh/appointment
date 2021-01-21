@@ -25,6 +25,8 @@ Route::post('/bookappointment','Frontend\AppointmentController@store');
 Route::get('/bookappointment/times/{id}','Frontend\AppointmentController@times');
 Route::get('/verifybooking','Frontend\AppointmentController@verifybooking')->name('verifybooking');
 Route::post('/verifybooking','Frontend\AppointmentController@verify');
+
+
 Route::group(['middleware' => ['auth','Hasclinic','Checkrole:doctor']], function () {
 Route::get('/clinic/appointmentdate','Backend\AppointmentdateController@index');
 Route::post('/clinic/appointmentdate','Backend\AppointmentdateController@store');
@@ -79,5 +81,3 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/profile-setting','Backend\SettingController@post_profile_setting');
 });
 Auth::routes();
-Route::get('/verify',[App\Http\Controllers\Frontend\AppointmentController::class,'verify']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
