@@ -48,16 +48,16 @@ class AppointmentController extends Controller
         // $message = $client->message()->send([
         //     'to' => '201289189978',
         //     'from' => 'mohamed frouh',
-        //     'text' => $verification_code,
+        //     'text' => $verification_code
         // ]);
-            return redirect()->route('verifybooking')->with(['id'=>$id,'phone_number'=>$phone_number]);
-           // return view('frontend.pages.verify',compact('id','phone_number'));
+            //return redirect()->route('verifybooking')->with(['id'=>$id,'phone_number'=>$phone_number]);
+           return view('frontend.pages.verify',compact('id','phone_number'));
         }
         return back()->with(['phone_number'=>$request->phone_number,'gender'=>$request->gender,'age'=>$request->age,'name'=>$request->name,'error'=>'هذاالوقت محجوز']);
     }
     public function verifybooking()
     {
-           return view('frontend.pages.verify');
+        return view('frontend.pages.verify');
     }
     public function verify(Request $request )
     {

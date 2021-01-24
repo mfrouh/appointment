@@ -39,14 +39,17 @@ class ClinicController extends Controller
     {
         $this->validate($request,[
         'address'=>'required|min:8|max:50',
-        'clinic_name'=>'required|min:4|max:50',
+        'name'=>'required|min:4|max:50',
         'image'=>'required|image',
         'city'=>'required|min:2|max:50',
         'state'=>'required|min:2|max:50',
         'country'=>'required|min:2|max:50',
-        'time_appointment'=>'required|in:15,30,45,60',
+        'time_appointment'=>'required|in:10,15,30,45,60',
         'price'=>'required|numeric',
         'type_booking'=>'required|in:7,14,30',
+        'speciality_id'=>'required|integer',
+        'phone1'=>'required|min:11|max:11',
+        'phone2'=>'nullable|min:11|max:11',
         ]);
         auth()->user()->clinic()->create($request->all());
         return back();
@@ -85,14 +88,17 @@ class ClinicController extends Controller
     {
         $this->validate($request,[
         'address'=>'required|min:8|max:50',
-        'clinic_name'=>'required|min:4|max:50',
+        'name'=>'required|min:4|max:50',
         'image'=>'nullable|image',
         'city'=>'required|min:2|max:50',
         'state'=>'required|min:2|max:50',
         'country'=>'required|min:2|max:50',
-        'time_appointment'=>'required|in:15,30,45,60',
+        'time_appointment'=>'required|in:10,15,30,45,60',
         'price'=>'required|numeric',
-        'type_booking'=>'required|in:7,14,30'
+        'type_booking'=>'required|in:7,14,30',
+        'speciality_id'=>'required|integer',
+        'phone1'=>'required|min:11|max:11',
+        'phone2'=>'nullable|min:11|max:11',
         ]);
         $clinic->update($request->all());
         return back();

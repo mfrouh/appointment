@@ -17,4 +17,15 @@ class PageController extends Controller
        $clinics=Clinic::paginate(9);
        return view('frontend.pages.clinics',compact('clinics'));
    }
+   public function search(Request $request)
+   {
+       $clinics=Clinic::paginate(9);
+       return view('frontend.pages.clinics',compact('clinics'));
+   }
+   public function profile($id)
+   {
+       $clinic=Clinic::findOrfail($id);
+       return view('frontend.pages.profile',compact('clinic'));
+   }
+
 }

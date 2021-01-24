@@ -25,9 +25,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>اسم العيادة </label>
-                        <input type="text" class="form-control" name="clinic_name" value="{{old('clinic_name')}}"  >
+                        <input type="text" class="form-control" name="name" value="{{old('name')}}"  >
                     </div>
-                    @error('clinic_name')
+                    @error('name')
                          <span class="mute"> {{$message}}</span>
                     @enderror
                 </div>
@@ -38,6 +38,19 @@
                     </div>
                     @error('image')
                          <span class="mute"> {{$message}}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">التخصص</label>
+                        <select class="form-control select"  name="speciality_id">
+                            @foreach ($specialities as $speciality)
+                            <option value="{{$speciality->id}}"{{old('speciality_id')==$speciality->id?'selected':''}} >{{$speciality->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('speciality_id')
+                       <span class="mute"> {{$message}}</span>
                     @enderror
                 </div>
                 <div class="col-md-6">
@@ -80,6 +93,7 @@
                     <div class="form-group">
                         <label class="control-label">وقت الكشف</label>
                         <select class="form-control select"  name="time_appointment">
+                            <option value="10"{{old('time_appointment')=='10'?'selected':''}} >10</option>
                             <option value="15"{{old('time_appointment')=='15'?'selected':''}} >15</option>
                             <option value="30"{{old('time_appointment')=='30'?'selected':''}} >30</option>
                             <option value="45"{{old('time_appointment')=='45'?'selected':''}} >45</option>
@@ -110,6 +124,24 @@
                     </div>
                     @error('type_booking')
                       <span class="mute"> {{$message}}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">رقم التلفون الاول</label>
+                        <input type="text" class="form-control" name="phone1" value="{{old('phone1')}}">
+                    </div>
+                    @error('phone1')
+                        <span class="mute"> {{$message}}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">رقم التلفون الثاني</label>
+                        <input type="text" class="form-control" name="phone2" value="{{old('phone2')}}">
+                    </div>
+                    @error('phone2')
+                        <span class="mute"> {{$message}}</span>
                     @enderror
                 </div>
                 <div class="col-md-12 text-center">

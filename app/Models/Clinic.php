@@ -11,13 +11,32 @@ class Clinic extends Model
 
     protected $table='clinics';
 
-    protected $fillable=['user_id','address','clinic_name','image','city','state','country','time_appointment','price','type_booking'];
-
+    protected $fillable=['speciality_id','phone1','phone2','user_id','address','name','image','city','state','country','time_appointment','price','type_booking'];
+    public static function boot()
+    {
+        parent::boot();
+        static::saving(function ($model) {
+            if (!is_string($model->image)) {
+                $model->image = sortimage('storage/clinics/main',$model->image);
+            }
+        });
+    }
+    public function ScopeActive($q)
+    {
+        $q->where('status','active');
+    }
+    public function ScopeInActive($q)
+    {
+        $q->where('status','inactive');
+    }
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-
+    public function speciality()
+    {
+        return $this->belongsTo('App\Models\Speciality');
+    }
     public function gallery()
     {
        return $this->morphMany('App\Models\Image','imageable');

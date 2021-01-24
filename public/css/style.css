@@ -2712,7 +2712,7 @@ a.wish_bt:hover:after {
 
 .indent_title_in {
   position: relative;
-  padding-left: 60px;
+  padding-right: 60px;
   margin-bottom: 20px;
 }
 @media (max-width: 767px) {
@@ -2724,7 +2724,7 @@ a.wish_bt:hover:after {
 .indent_title_in i {
   font-size: 40px;
   position: absolute;
-  left: 0;
+  right: 0;
   color: #3f4079;
   top: 0;
 }

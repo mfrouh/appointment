@@ -61,7 +61,7 @@
 			<div class="row">
 				<div class="col-lg-3 col-6">
 					<div id="logo_home">
-						<h1><a href="/" title="Findoctor"> دكتورك</a></h1>
+						<h1><a href="/" title="Findoctor"></a></h1>
 					</div>
 				</div>
 				<div class="col-lg-9 col-6">
