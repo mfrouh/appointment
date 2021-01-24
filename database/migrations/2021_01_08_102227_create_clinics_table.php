@@ -15,6 +15,10 @@ class CreateClinicsTable extends Migration
     {
         Schema::create('clinics', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('governorate_id');
+            $table->foreign('governorate_id')->references('id')->on('governorates');
+            $table->foreignId('city_id');
+            $table->foreign('city_id')->references('id')->on('cities');
             $table->foreignId('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('speciality_id');
@@ -23,9 +27,6 @@ class CreateClinicsTable extends Migration
             $table->enum('status',['active','inactive'])->default('inactive');
             $table->string('image');
             $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
             $table->string('phone1');
             $table->string('phone2')->nullable();
             $table->enum('time_appointment',['10','15','30','45','60'])->default('10');

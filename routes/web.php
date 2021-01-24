@@ -25,8 +25,13 @@ Route::post('/bookappointment','Frontend\AppointmentController@store');
 Route::get('/bookappointment/times/{id}','Frontend\AppointmentController@times');
 Route::get('/verifybooking','Frontend\AppointmentController@verifybooking')->name('verifybooking');
 Route::post('/verifybooking','Frontend\AppointmentController@verify');
+Route::get('/governorate/{id}','Frontend\PageController@governorate');
 
-
+Route::group(['middleware' => ['auth','Checkrole:admin']], function () {
+    Route::get('/dashboard','Backend\DashboardController@index');
+    Route::resource('speciality', 'Backend\SpecialityController');
+    Route::resource('clinic', 'Backend\ClinicController')->only('index');
+});
 Route::group(['middleware' => ['auth','Hasclinic','Checkrole:doctor']], function () {
 Route::get('/dashboard','Backend\DashboardController@index');
 Route::get('/clinic/appointmentdate','Backend\AppointmentdateController@index');
@@ -69,11 +74,7 @@ Route::group(['middleware' => ['auth','Checkrole:doctor']], function () {
     Route::resource('clinic', 'Backend\ClinicController')->only(['store','update']);
 });
 
-Route::group(['middleware' => ['auth','Checkrole:admin']], function () {
-    Route::get('/dashboard','Backend\DashboardController@index');
-    Route::resource('speciality', 'Backend\SpecialityController');
-    Route::resource('clinic', 'Backend\ClinicController')->only('index');
-});
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/change-password','Backend\SettingController@change_password');

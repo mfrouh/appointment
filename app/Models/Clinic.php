@@ -11,7 +11,8 @@ class Clinic extends Model
 
     protected $table='clinics';
 
-    protected $fillable=['speciality_id','phone1','phone2','user_id','address','name','image','city','state','country','time_appointment','price','type_booking'];
+    protected $fillable=['speciality_id','phone1','phone2','user_id','address','name','image','city_id','governorate_id','time_appointment','price','type_booking'];
+    
     public static function boot()
     {
         parent::boot();

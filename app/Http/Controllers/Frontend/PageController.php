@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Clinic;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,12 @@ class PageController extends Controller
    {
        $clinic=Clinic::findOrfail($id);
        return view('frontend.pages.profile',compact('clinic'));
+   }
+
+   public function governorate($id)
+   {
+      $cities=City::where('governorate_id',$id)->get();
+      return response()->json($cities);
    }
 
 }

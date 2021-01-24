@@ -44,7 +44,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label">التخصص</label>
-                        <select class="form-control select"  name="speciality_id">
+                        <select class="form-control select2"  name="speciality_id">
                             @foreach ($specialities as $speciality)
                             <option value="{{$speciality->id}}"{{$clinic->speciality_id==$speciality->id?'selected':''}} >{{$speciality->name}}</option>
                             @endforeach
@@ -65,29 +65,28 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label">المدينة</label>
-                        <input type="text" class="form-control" name="city"  value="{{$clinic->city}}" >
+                        <label class="control-label">المحافظة</label>
+                        <select class="form-control select2" name="governorate_id" id="governorate">
+                            <option value="">أختار المحافظة</option>
+                            @foreach ($governorates as $governorate)
+                              <option value="{{$governorate->id}}" {{$clinic->governorate_id==$governorate->id?'selected':''}}>{{$governorate->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    @error('city')
+                    @error('governorate_id')
                           <span class="mute"> {{$message}}</span>
                     @enderror
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label">الشارع</label>
-                        <input type="text" class="form-control" name="state" value="{{$clinic->state}}"  >
+                        <label class="control-label">المدينة</label>
+                        <input type="hidden" id="city_id" value="{{$clinic->city_id}}">
+                        <select class="form-control select2" name="city_id" id="city">
+                            <option value="">أختار المدينة</option>
+                        </select>
                     </div>
-                    @error('state')
-                        <span class="mute"> {{$message}}</span>
-                    @enderror
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">البلد</label>
-                        <input type="text" class="form-control" name="country" value="{{$clinic->country}}">
-                    </div>
-                    @error('country')
-                       <span class="mute"> {{$message}}</span>
+                    @error('city_id')
+                          <span class="mute"> {{$message}}</span>
                     @enderror
                 </div>
                 <div class="col-md-6">
@@ -156,4 +155,36 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<script>
+ $(document).ready(function()
+ {
+    var city_id=$('#city_id').val();
+    var id=$('#governorate').val();
+    getcities(id,city_id);
+ });
+ $('#governorate').change(function (e) {
+     e.preventDefault();
+     var id=$(this).val();
+     getcities(id);
+ });
+ function getcities(id,city_id=null)
+ {
+    $.ajax({
+          type: "get",
+          url: "/governorate/"+id,
+          dataType: "json",
+          success: function (response) {
+              var cities='';
+            response.forEach(element => {
+                element.id==city_id?selected='selected':selected='';
+                cities+='<option value="'+element.id+'" '+selected+' >'+element.name+'</option>'
+              });
+              $('#city').html(cities);
+          }
+      });
+ }
+</script>
 @endsection
