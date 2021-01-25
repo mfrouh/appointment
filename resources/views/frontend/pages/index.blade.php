@@ -2,11 +2,11 @@
 @section('content')
 <div class="hero_home version_1">
     <div class="content">
-        <h3 class="p-2">ابحث عن عيادة</h3>
+        <h3 class="p-2">ابحث عن دكتور</h3>
         <form method="post" action="/search">
             <div id="custom-search-input">
                 <div class="input-group">
-                    <input type="text" class=" search-query" placeholder=" عيادة">
+                    <input type="text" class=" search-query" placeholder=" دكتور">
                     <input type="submit" class="btn_search" value="بحث">
                 </div>
             </div>
@@ -22,13 +22,13 @@
         <div class="col-lg-4">
             <div class="box_feat" id="icon_1">
                 <span></span>
-                <h3>ابحث عن العيادة</h3>
+                <h3>ابحث عن الدكتور</h3>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="box_feat" id="icon_2">
                 <span></span>
-                <h3>شاهد معلومات عن العيادة</h3>
+                <h3>شاهد معلومات عن الدكتور</h3>
             </div>
         </div>
         <div class="col-lg-4">
@@ -38,6 +38,6 @@
         </div>
     </div>
     <!-- /row -->
-    <p class="text-center"><a href="/clinics" class="btn_1 medium">ابحث عن العيادة</a></p>
+    <p class="text-center"><a href="/clinics" class="btn_1 medium">ابحث عن الدكتور</a></p>
 </div>
 @endsection

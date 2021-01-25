@@ -19,8 +19,8 @@
         <style>
         body{
             font-family: 'Tajawal', sans-serif;
-            font-family: 'Lalezar', cursive;
-            /* font-family: 'Rakkas', cursive; */
+            /* font-family: 'Lalezar', cursive;
+            font-family: 'Rakkas', cursive; */
           }
 
         </style>

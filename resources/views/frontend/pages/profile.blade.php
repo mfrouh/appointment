@@ -27,13 +27,10 @@
                                 <small>{{$clinic->speciality->name}}</small>
                                 <h1>{{$clinic->user->name}}</h1>
                                 <span class="rating">
-                                    <i class="icon_star voted"></i>
-                                    <i class="icon_star voted"></i>
-                                    <i class="icon_star voted"></i>
-                                    <i class="icon_star voted"></i>
-                                    <i class="icon_star"></i>
-                                    <small>({{$clinic->reviews->count()}})</small>
-                                    <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+                                    @for ($i = 1; $i <=5; $i++)
+                                    <i class="icon_star {{$i<=$clinic->rates()?'voted':''}}"></i>
+                                    @endfor
+                                    <small>({{$clinic->ratecount()}})</small>
                                 </span>
                                 <ul class="statistic">
                                     <li>{{$clinic->patients->count()}} مريض</li>
@@ -123,18 +120,20 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div id="review_summary">
-                                    <strong>{{$clinic->reviews->count()}}</strong>
+                                    <strong>{{$clinic->rates()}}</strong>
                                     <div class="rating">
-                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                                        @for ($i = 1; $i <=5; $i++)
+                                           <i class="icon_star {{$i<=$clinic->rates()?'voted':''}}"></i>
+                                        @endfor
                                     </div>
-                                    <small>من مجموع {{$clinic->reviews->count()}} أراء</small>
+                                    <small>من مجموع {{$clinic->ratecount()}} أراء</small>
                                 </div>
                             </div>
                             <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-lg-10 col-9">
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{$clinic->rateone(5)}}%" aria-valuenow="{{$clinic->rateone(5)}}"aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-3"><small><strong>5 نجوم</strong></small></div>
@@ -143,7 +142,7 @@
                                 <div class="row">
                                     <div class="col-lg-10 col-9">
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{$clinic->rateone(4)}}%" aria-valuenow="{{$clinic->rateone(4)}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-3"><small><strong>4 نجوم</strong></small></div>
@@ -152,7 +151,7 @@
                                 <div class="row">
                                     <div class="col-lg-10 col-9">
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{$clinic->rateone(3)}}%" aria-valuenow="{{$clinic->rateone(3)}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-3"><small><strong>3 نجوم</strong></small></div>
@@ -161,7 +160,7 @@
                                 <div class="row">
                                     <div class="col-lg-10 col-9">
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{$clinic->rateone(2)}}%" aria-valuenow="{{$clinic->rateone(2)}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-3"><small><strong>2 نجوم</strong></small></div>
@@ -170,7 +169,7 @@
                                 <div class="row">
                                     <div class="col-lg-10 col-9">
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{$clinic->rateone(1)}}%" aria-valuenow="{{$clinic->rateone(1)}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-3"><small><strong>1 نجوم</strong></small></div>
@@ -207,6 +206,27 @@
                 </div>
             </div>
             <!-- /section_2 -->
+        </div>
+        <div class="col-xl-4 col-lg-4">
+            <div class="box_general_3 booking text-right">
+                <div class="title">
+                    <h6 class="text-white">أيام العمل</h6>
+                </div>
+                <table class="table table-striped table-clean text-center">
+                    <tr>
+                        <th>اليوم</th>
+                        <th>من</th>
+                        <th>الي</th>
+                     </tr>
+                     @foreach ($clinic->workdates as $workdate)
+                    <tr>
+                       <th>{{\Carbon\Carbon::createFromFormat('D',$workdate->day)->format('l')}}</th>
+                       <td>{{\Carbon\Carbon::createFromFormat('H:i:s',$workdate->time->start)->format('h:i A')}}</td>
+                       <td>{{\Carbon\Carbon::createFromFormat('H:i:s',$workdate->time->end)->format('h:i A')}}</td>
+                    </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
     </div>
 </div>

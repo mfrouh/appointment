@@ -29,14 +29,19 @@
                  <div class="col-md-4">
                      <div class="box_list fadeIn">
                          <figure>
-                             <a href="/profile/{{$clinic->id}}"><img src="{{asset($clinic->image)}}" class="img-fluid" alt="">
+                             <a href="/profile-clinic/{{$clinic->id}}"><img src="{{asset($clinic->image)}}" class="img-fluid" alt="">
                                  <div class="preview"><span>اقرأ المزيد</span></div>
                              </a>
                          </figure>
                          <div class="wrapper text-right">
-                             <small>Psicologist</small>
+                             <small>{{$clinic->speciality->name}}</small>
                              <h3>{{$clinic->user->name}}</h3>
-                             <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>({{$clinic->reviews->count()}})</small></span>
+                             <span class="rating">
+                                @for ($i = 1; $i <=5; $i++)
+                                   <i class="icon_star {{$i<=$clinic->rates()?'voted':''}}"></i>
+                                @endfor
+                                  <small>({{$clinic->ratecount()}}) </small>
+                            </span>
                          </div>
                          <a href="/bookappointment/{{$clinic->id}}" class=" btn_1 m-2">احجز الان</a>
                      </div>

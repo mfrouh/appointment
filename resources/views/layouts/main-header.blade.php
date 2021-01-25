@@ -25,18 +25,16 @@
 										</div>
 										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">لديك {{auth()->user()->unreadnotifications->count()}} تنبهات لم تقراء</p>
 									</div>
-									<div class="main-notification-list Notification-scroll">
+									<div class="main-notification-list Notification-scroll" style="overflow: scroll;">
                                         @forelse (auth()->user()->notifications as $notification)
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-pink">
-												<i class="la la-file-alt text-white"></i>
-											</div>
+										<a class="d-flex p-3 border-bottom" href="javascript:void(0)">
 											<div class="mr-3">
 												<h5 class="notification-label mb-1">{{$notification['data']['content']}}</h5>
-												<div class="notification-subtext">{{$notification['created_at']->format('d-m  h:m A')}}</div>
+												<div class="notification-subtext">{{$notification['created_at']->diffforHumans()}}</div>
 											</div>
 											<div class="mr-auto" >
-												<i class="fa fa-markdown text-left text-muted"></i>
+                                                <i class="fa fa-eye-slash text-left text-muted"></i>
+                                                <i class="fa fa-trash text-left text-muted"></i>
 											</div>
                                         </a>
                                         @empty

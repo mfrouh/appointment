@@ -7,6 +7,7 @@ use App\Models\AppointmentDate;
 use App\Models\AppointmentTime;
 use App\Models\Booking;
 use App\Models\Clinic;
+use App\Notifications\BookingSuccessNotification;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -66,6 +67,7 @@ class AppointmentController extends Controller
         if ($booking->count()==1) {
            Booking::find($request->id)->update(['verified'=>1,'verify_id'=>null]);
            AppointmentTime::find($booking->first()->appointment_time_id)->update(['booked'=>1]);
+            $booking->first()->clinic->user->notify(new BookingSuccessNotification($booking->first()));
            return view('frontend.pages.success');
         }
         return back()->with(['id'=>$request->id,'code'=>$request->code,'error'=>'هذا الكود خطئ']);

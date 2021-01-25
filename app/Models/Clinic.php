@@ -12,7 +12,7 @@ class Clinic extends Model
     protected $table='clinics';
 
     protected $fillable=['speciality_id','phone1','phone2','user_id','address','name','image','city_id','governorate_id','time_appointment','price','type_booking'];
-    
+
     public static function boot()
     {
         parent::boot();
@@ -111,5 +111,17 @@ class Clinic extends Model
     public function experiences()
     {
         return $this->hasMany('App\Models\Experience');
+    }
+    public function rateone($id)
+    {
+        return (Review::where('clinic_id',$this->id)->where('rate',$id)->count()/$this->ratecount())*100;
+    }
+    public function rates()
+    {
+        return Review::where('clinic_id',$this->id)->where('rate','!=',null)->sum('rate')/$this->ratecount();
+    }
+    public function ratecount()
+    {
+        return Review::where('clinic_id',$this->id)->where('rate','!=',null)->count();
     }
 }

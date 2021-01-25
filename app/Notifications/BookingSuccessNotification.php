@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -16,9 +17,11 @@ class BookingSuccessNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public $booking;
+
+    public function __construct(Booking $booking)
     {
-        //
+        $this->booking=$booking;
     }
 
     /**
@@ -29,7 +32,7 @@ class BookingSuccessNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -55,7 +58,9 @@ class BookingSuccessNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+           'content'=>" تم حجز كشف في اليوم  {$this->booking->day}
+           في الساعة  {$this->booking->time}
+           باسم   {$this->booking->name}",
         ];
     }
 }
