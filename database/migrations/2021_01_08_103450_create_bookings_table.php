@@ -18,6 +18,7 @@ class CreateBookingsTable extends Migration
             $table->foreignId('clinic_id');
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
+            $table->string('verify_id')->nullable()->unique();
             $table->boolean('verified')->default(0);
             $table->string('verification_code')->nullable();
             $table->string('phone_number');

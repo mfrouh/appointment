@@ -23,7 +23,7 @@ Route::get('/profile-clinic/{id}','Frontend\PageController@profile');
 Route::get('/bookappointment/{id}','Frontend\AppointmentController@booking');
 Route::post('/bookappointment','Frontend\AppointmentController@store');
 Route::get('/bookappointment/times/{id}','Frontend\AppointmentController@times');
-Route::get('/verifybooking','Frontend\AppointmentController@verifybooking')->name('verifybooking');
+Route::get('/verifybooking/{id}','Frontend\AppointmentController@verifybooking')->name('verifybooking');
 Route::post('/verifybooking','Frontend\AppointmentController@verify');
 Route::get('/governorate/{id}','Frontend\PageController@governorate');
 
@@ -73,8 +73,6 @@ Route::group(['middleware' => ['auth','Checkrole:doctor']], function () {
     Route::get('/myclinic','Backend\DoctorController@myclinic');
     Route::resource('clinic', 'Backend\ClinicController')->only(['store','update']);
 });
-
-
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/change-password','Backend\SettingController@change_password');

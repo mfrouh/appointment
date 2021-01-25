@@ -45,11 +45,11 @@ class AppointmentDateJob implements ShouldQueue
                 $end=$workdate->time->end;
                  $j=0;
                     do {
-                        $start=Carbon::parse($start)->addMinutes($j*$this->clinic->time_appointment);
-                        $end=Carbon::parse($end);
-                        $date->times()->create(['time'=>$start]);
+                        $start2=Carbon::parse($start)->addMinutes($j * $this->clinic->time_appointment);
+                        $end2=Carbon::parse($end);
+                        $date->times()->create(['time'=>$start2]);
                         $j++;
-                    } while ($end > $start);
+                    } while ($end2 > $start2);
                 }
             }
         }

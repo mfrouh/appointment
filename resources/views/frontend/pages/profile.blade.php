@@ -20,11 +20,11 @@
                         <div class="row">
                             <div class="col-lg-5 col-md-4">
                                 <figure>
-                                    <img src="http://via.placeholder.com/565x565.jpg" alt="" class="img-fluid">
+                                    <img src="{{asset($clinic->image)}}" alt="" class="img-fluid">
                                 </figure>
                             </div>
                             <div class="col-lg-7 col-md-8">
-                                <small>التخصص</small>
+                                <small>{{$clinic->speciality->name}}</small>
                                 <h1>{{$clinic->user->name}}</h1>
                                 <span class="rating">
                                     <i class="icon_star voted"></i>
