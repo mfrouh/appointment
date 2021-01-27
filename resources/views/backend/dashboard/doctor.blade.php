@@ -152,7 +152,7 @@ var chart2 = new Chart(ctx2, {
 
     // The data for our dataset
     data: {
-        labels: ['الحجوزات المغلقة', 'الحجوزات المتاحة'],
+        labels: [' الحجوزات  الغير المتحققة منها', '  الحجوزات المتحققة منها'],
         datasets: [{
             label: 'الحجوزات',
             backgroundColor:['red','green'],

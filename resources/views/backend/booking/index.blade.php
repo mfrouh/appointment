@@ -50,7 +50,7 @@
 						 @foreach ($bookings as $booking)
  							<tr>
                                 <td>{{$booking->name}}</td>
-                                <td>{{$booking->appointment_time_id}}</td>
+                                <td>{{$booking->day.'( '. $booking->time.' )'}}</td>
                                 <td>{{$booking->phone_number}}</td>
                                 <td>{{$booking->age}}</td>
                                 <td>{{$booking->gender}}</td>
