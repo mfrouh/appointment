@@ -7,7 +7,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-right">
-                <h4><strong>شاهد 10</strong> من 123 نتائج</h4>
             </div>
             <div class="col-md-6">
                  <div class="search_bar_list">

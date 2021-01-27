@@ -25,7 +25,7 @@
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
                     <h4 class="card-title mg-b-0">صور العيادة</h4>
-                    <form action="/clinic/gallery" method="POST" enctype="multipart/form-data">
+                    <form action="/clinic-gallery" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="file" name="images[]" accept="*/image" multiple>
                         <input type="submit" class="btn btn-primary btn-sm" value="أضافة صور">
@@ -72,7 +72,7 @@
     {
         $.ajax({
             type: "get",
-            url: "/clinic/appointmentdate/"+id,
+            url: "/clinic-appointmentdate/"+id,
             dataType: "json",
             success: function (respones) {
             var a='';

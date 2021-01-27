@@ -114,14 +114,26 @@ class Clinic extends Model
     }
     public function rateone($id)
     {
-        return (Review::where('clinic_id',$this->id)->where('rate',$id)->count()/$this->ratecount())*100;
+        if(Review::where('clinic_id',$this->id)->where('rate','!=',null)->count()!=0)
+        {
+         return (Review::where('clinic_id',$this->id)->where('rate',$id)->count()/$this->ratecount())*100;
+        }
+        return 0;
     }
     public function rates()
     {
+        if(Review::where('clinic_id',$this->id)->where('rate','!=',null)->count()!=0)
+        {
         return Review::where('clinic_id',$this->id)->where('rate','!=',null)->sum('rate')/$this->ratecount();
+        }
+        return 0;
     }
     public function ratecount()
     {
+        if(Review::where('clinic_id',$this->id)->where('rate','!=',null)->count()!=0)
+        {
         return Review::where('clinic_id',$this->id)->where('rate','!=',null)->count();
+        }
+        return 0;
     }
 }

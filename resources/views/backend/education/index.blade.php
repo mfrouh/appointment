@@ -147,7 +147,7 @@ function deleteeducation(id)
 {
     $.ajax({
         type: "delete",
-        url: "/clinic/education/"+id,
+        url: "/clinic-education/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -162,7 +162,7 @@ function createeducation(dat)
 {
     $.ajax({
         type: "post",
-        url: "/clinic/education",
+        url: "/clinic-education",
         dataType: "json",
         data:dat,
         success: function (response) {

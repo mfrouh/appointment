@@ -140,7 +140,7 @@ function deleteexperience(id)
 {
     $.ajax({
         type: "delete",
-        url: "/clinic/experience/"+id,
+        url: "/clinic-experience/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -155,7 +155,7 @@ function createexperience(dat)
 {
     $.ajax({
         type: "post",
-        url: "/clinic/experience",
+        url: "/clinic-experience",
         dataType: "json",
         data:dat,
         success: function (response) {

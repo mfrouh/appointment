@@ -119,7 +119,7 @@ function deleteblacklist(id)
 {
     $.ajax({
         type: "delete",
-        url: "/clinic/blacklist/"+id,
+        url: "/clinic-blacklist/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -134,7 +134,7 @@ function createblacklist(dat)
 {
     $.ajax({
         type: "post",
-        url: "/clinic/blacklist",
+        url: "/clinic-blacklist",
         dataType: "json",
         data:dat,
         success: function (response) {

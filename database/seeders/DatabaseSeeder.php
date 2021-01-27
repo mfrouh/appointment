@@ -306,5 +306,8 @@ City::create(['id'=>247,'governorate_id'=> 15, 'name'=>'الرديسية']);
 City::create(['id'=>248,'governorate_id'=> 15, 'name'=>'البصيلية']);
 City::create(['id'=>249,'governorate_id'=> 15, 'name'=>'السباعية']);
 City::create(['id'=>250,'governorate_id'=> 15, 'name'=>'ابوسمبل السياحية']);
+for ($i=1; $i <1000 ; $i++) {
+   $user=User::create(['name'=>"Doctor$i",'email'=>"doctor$i@example.com",'password'=>bcrypt('12345678')]);
+}
     }
 }

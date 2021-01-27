@@ -140,7 +140,7 @@ function deleteworkdate(id)
 {
     $.ajax({
         type: "delete",
-        url: "/clinic/workdate/"+id,
+        url: "/clinic-workdate/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -155,7 +155,7 @@ function createworkdate(dat)
 {
     $.ajax({
         type: "post",
-        url: "/clinic/workdate",
+        url: "/clinic-workdate",
         dataType: "json",
         data:dat,
         success: function (response) {

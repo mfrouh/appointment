@@ -106,9 +106,6 @@
                             @endforeach
                         </ul>
                     </div>
-                    <!--  End wrapper indent -->
-
-                    <hr>
                 </div>
                 <!-- /section_1 -->
             </div>

@@ -21,7 +21,7 @@
  			<div class="card-header pb-0">
  				<div class="d-flex justify-content-between">
                     <h4 class="card-title mg-b-0">مواعيد الحجوزات</h4>
-                     <form action="/clinic/appointmentdate" method="POST">
+                     <form action="/clinic-appointmentdate" method="POST">
                         @csrf
                         <input type="submit" class="btn btn-primary btn-sm" value="وضع المواعيد">
                     </form>
@@ -60,7 +60,7 @@
     {
         $.ajax({
             type: "get",
-            url: "/clinic/appointmentdate/"+id,
+            url: "/clinic-appointmentdate/"+id,
             dataType: "json",
             success: function (respones) {
             var a='';

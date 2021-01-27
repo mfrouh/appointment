@@ -14,7 +14,7 @@
   <!-- breadcrumb -->
 @endsection
 @section('content')
-<form action="/clinic/social" method="post">
+<form action="/clinic-social" method="post">
  @csrf
  <div class="row row-sm">
  	<div class="col-xl-8">

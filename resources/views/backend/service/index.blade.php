@@ -119,7 +119,7 @@ function deleteservice(id)
 {
     $.ajax({
         type: "delete",
-        url: "/clinic/service/"+id,
+        url: "/clinic-service/"+id,
         dataType: "json",
         success: function (response) {
             location.reload();
@@ -134,7 +134,7 @@ function createservice(dat)
 {
     $.ajax({
         type: "post",
-        url: "/clinic/service",
+        url: "/clinic-service",
         dataType: "json",
         data:dat,
         success: function (response) {
