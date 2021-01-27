@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+Artisan::command('time:work', function () {
+    $this->comment('Block Ended Time');
+});
+Artisan::command('date:work', function () {
+    $this->comment('Delete First Date And  Add Last Date');
+});

@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\dateappointment;
+use App\Console\Commands\timeappointment;
 use App\Console\Commands\verifybooking;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,6 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
        verifybooking::class,
+       dateappointment::class,
+       timeappointment::class,
     ];
 
     /**
@@ -26,6 +30,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('verify:booking')->everyMinute();
+         $schedule->command('date:work')->daily();
+         $schedule->command('time:work')->everyTenMinutes();
          $schedule->command('inspire')->hourly();
          $schedule->command('queue:work')->everyMinute();
          $schedule->command('queue:restart')->everyFiveMinutes();

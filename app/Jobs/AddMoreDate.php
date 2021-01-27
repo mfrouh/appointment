@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\AppointmentTime;
 use App\Models\Clinic;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -12,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class AppointmentDateJob implements ShouldQueue
+class AddMoreDate implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -34,12 +33,13 @@ class AppointmentDateJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->clinic->appointmentdates()->delete();
-        for ($i=0; $i < $this->clinic->type_booking; $i++) {
+        $i=0;
+        do {
             foreach ($this->clinic->workdates as $key => $workdate) {
-              if($workdate->day==Carbon::now()->addDays($i)->format('D'))
+              if($workdate->day==Carbon::now()->addDays($this->clinic->type_booking)->format('D'))
               {
-                $date=$this->clinic->appointmentdates()->create(['day'=>Carbon::now()->addDays($i)]);
+                $i=1;
+                $date=$this->clinic->appointmentdates()->create(['day'=>Carbon::now()->addDays($this->clinic->type_booking)]);
                 $start=$workdate->time->start;
                 $end=$workdate->time->end;
                  $j=0;
@@ -51,6 +51,6 @@ class AppointmentDateJob implements ShouldQueue
                     } while ($end2 > $start2);
                 }
             }
-        }
+        }while ($i==1);
     }
 }
