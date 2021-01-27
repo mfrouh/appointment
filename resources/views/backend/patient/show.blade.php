@@ -48,7 +48,136 @@
                     </tr>
                 </table>
  			</div>
- 		</div>
+        </div>
+        <div class="card panel-primary tabs-style-1">
+            <div class=" tab-menu-heading">
+                <div class="tabs-menu1">
+                    <!-- Tabs -->
+                    <ul class="nav panel-tabs main-nav-line">
+                        <li class="nav-item"><a href="#prescriptions" class="nav-link active" data-toggle="tab">الروشتات</a></li>
+                        <li class="nav-item"><a href="#appointments" class="nav-link" data-toggle="tab">الكشوفات</a></li>
+                        <li class="nav-item"><a href="#surgeries" class="nav-link" data-toggle="tab">العمليات</a></li>
+                        <li class="nav-item"><a href="#followups" class="nav-link" data-toggle="tab">المتابعات</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body tabs-menu-body main-content-body-right border-top-0 border">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="prescriptions">
+                        <table id="example1" class="table key-buttons text-md-nowrap text-center">
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom-0">المريض</th>
+                                    <th class="border-bottom-0">الصلاحيات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($prescriptions as $prescription)
+                                <tr>
+                                   <td>{{$prescription->patient->name}}</td>
+                                   <td>
+                                        <a class="btn btn-primary btn-sm edit"  href="/prescription/{{$prescription->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a class="btn btn-danger btn-sm delete"  data-id="{{$prescription->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                   </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="appointments">
+                        <table id="example1" class="table key-buttons text-md-nowrap text-center">
+                            <thead>
+                                <tr>
+                                   <th class="border-bottom-0">المريض</th>
+                                   <th class="border-bottom-0">يوم الكشف</th>
+                                   <th class="border-bottom-0">وقت الكشف</th>
+                                   <th class="border-bottom-0">وقت الحجز</th>
+                                   <th class="border-bottom-0">السعر</th>
+                                   <th class="border-bottom-0">التشخيص</th>
+                                    <th class="border-bottom-0">الصلاحيات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($appointments as $appointment)
+                                <tr>
+                                   <td>{{$appointment->patient->name}}</td>
+                                   <td>{{$appointment->day}}</td>
+                                   <td>{{$appointment->time}}</td>
+                                   <td>{{$appointment->appointment_time_id}}</td>
+                                   <td>{{$appointment->price}}</td>
+                                   <td>{{$appointment->diagnose}}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm edit" href="/appointment/{{$appointment->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a class="btn btn-danger btn-sm delete"  data-id="{{$appointment->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                   </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="surgeries">
+                        <table id="example1" class="table key-buttons text-md-nowrap text-center">
+                            <thead>
+                                <tr>
+                                   <th class="border-bottom-0">المريض</th>
+                                   <th class="border-bottom-0">اسم العملية</th>
+                                   <th class="border-bottom-0">يوم العملية</th>
+                                   <th class="border-bottom-0">وقت العملية</th>
+                                   <th class="border-bottom-0">السعر</th>
+                                   <th class="border-bottom-0">اسم المستشفي</th>
+                                    <th class="border-bottom-0">الصلاحيات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($surgeries as $surgery)
+                                <tr>
+                                   <td>{{$surgery->patient?$surgery->patient->name:null}}</td>
+                                   <td>{{$surgery->name}}</td>
+                                   <td>{{$surgery->day}}</td>
+                                   <td>{{$surgery->time}}</td>
+                                   <td>{{$surgery->price}}</td>
+                                   <td>{{$surgery->hospital_name}}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm"  href="/surgery/{{$surgery->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a class="btn btn-danger btn-sm delete"  data-id="{{$surgery->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                   </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="followups">
+                        <table id="example1" class="table key-buttons text-md-nowrap text-center">
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom-0">المريض</th>
+                                   <th class="border-bottom-0">يوم المتابعة</th>
+                                   <th class="border-bottom-0">ساعة المتابعة</th>
+                                   <th class="border-bottom-0">السعر</th>
+                                   <th class="border-bottom-0">التشخيص</th>
+                                    <th class="border-bottom-0">الصلاحيات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($followups as $followup)
+                                <tr>
+                                   <td>{{$followup->patient->name}}</td>
+                                   <td>{{$followup->day}}</td>
+                                   <td>{{$followup->time}}</td>
+                                   <td>{{$followup->price}}</td>
+                                   <td>{{$followup->diagnose}}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href="/followup/{{$followup->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a class="btn btn-danger btn-sm delete"  data-id="{{$followup->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                   </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
  	</div>
  </div>
 </div>
@@ -59,6 +188,7 @@
 <x-Surgery.create :patient="$patient->id"/>
 @endsection
 @section('js')
+<script src="{{URL::asset('assets/js/tabs.js')}}"></script>
 <script>
     $.ajaxSetup({
         headers: {

@@ -26,6 +26,40 @@
 <!-- Eva-icons js -->
 <script src="{{URL::asset('assets/js/eva-icons.min.js')}}"></script>
 @yield('js')
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+   $('.deletenotification').click(function()
+   {
+      var id=$(this).attr('data-id');
+      var el=$(this);
+      $.ajax({
+          type: "delete",
+          url: "/notification/delete",
+          data: {id:id},
+          dataType: "json",
+          success: function (response) {
+            el.parent('div').parent('div').remove();
+          }
+      });
+   });
+   $('.changeread').click(function(){
+      var id=$(this).attr('data-id');
+      var el=$(this);
+      $.ajax({
+          type: "post",
+          url: "/notification",
+          data: {id:id},
+          dataType: "json",
+          success: function (response) {
+            el.remove();
+          }
+      });
+   });
+</script>
 <!-- Sticky js -->
 <script src="{{URL::asset('assets/js/sticky.js')}}"></script>
 <!-- custom js -->

@@ -64,7 +64,7 @@ Route::post('/doctor/followup','Backend\DoctortopatientController@followup');
 Route::resource('patient', 'Backend\PatientController')->except('create');
 Route::resource('surgery', 'Backend\SurgeryController')->except('show');
 Route::resource('prescription', 'Backend\PrescriptionController')->except('show');
-Route::resource('booking', 'Backend\BookingController')->except('show');
+Route::resource('booking', 'Backend\BookingController');
 Route::resource('appointment', 'Backend\AppointmentController')->except('show');
 Route::resource('followup', 'Backend\FollowupController')->except('show');
 });
@@ -79,5 +79,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/change-password','Backend\SettingController@post_change_password');
     Route::get('/profile-setting','Backend\SettingController@profile_setting');
     Route::post('/profile-setting','Backend\SettingController@post_profile_setting');
+    Route::post('/notification','Backend\NotificationController@changeread');
+    Route::delete('/notification/delete','Backend\NotificationController@destroy');
+
 });
 Auth::routes();

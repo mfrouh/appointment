@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\AppointmentDate;
 use App\Models\AppointmentTime;
 use App\Models\Booking;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -67,7 +69,14 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('backend.booking.show',compact('booking'));
+        $patient=Patient::where('name',$booking->name)->where('phone_number',$booking->phone_number)->where('clinic_id',auth()->user()->clinic->id)->first();
+        if (!$patient) {
+            $patient=auth()->user()->clinic->patients()->create(['name'=>$booking->name,'age'=>$booking->age,'phone_number'=>$booking->phone_number]);
+        }
+        if(!Appointment::where('booking_id',$booking->id)->first()){
+          Appointment::create(['patient_id'=>$patient->id,'booking_id'=> $booking->id,'day'=>now(),'time'=>now(),'booking'=>$booking->day.'T'.$booking->time,'clinic_id'=>auth()->user()->clinic->id,'price'=>auth()->user()->clinic->price]);
+        }
+        return redirect("/patient/".$patient->id);
     }
 
     /**

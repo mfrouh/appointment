@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
+use App\Models\FollowUp;
 use App\Models\Patient;
+use App\Models\Prescription;
+use App\Models\Surgery;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -55,7 +59,11 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        return view('backend.patient.show',compact('patient'));
+        $prescriptions=Prescription::where('patient_id',$patient->id)->where('clinic_id',auth()->user()->clinic->id)->get();
+        $appointments=Appointment::where('patient_id',$patient->id)->where('clinic_id',auth()->user()->clinic->id)->get();
+        $surgeries=Surgery::where('patient_id',$patient->id)->where('clinic_id',auth()->user()->clinic->id)->get();
+        $followups=FollowUp::where('patient_id',$patient->id)->where('clinic_id',auth()->user()->clinic->id)->get();
+        return view('backend.patient.show',compact('patient','prescriptions','appointments','surgeries','followups'));
     }
 
     /**

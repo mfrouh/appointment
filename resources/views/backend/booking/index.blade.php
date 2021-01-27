@@ -55,6 +55,7 @@
                                 <td>{{$booking->age}}</td>
                                 <td>{{$booking->gender}}</td>
  								<td>
+                                    <a class="btn btn-success btn-sm" href="/booking/{{$booking->id}}">بداية الكشف</a>
                                      <a class="btn btn-primary btn-sm edit" href="/booking/{{$booking->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$booking->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>

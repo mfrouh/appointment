@@ -27,16 +27,16 @@
 									</div>
 									<div class="main-notification-list Notification-scroll" style="overflow: scroll;">
                                         @forelse (auth()->user()->notifications as $notification)
-										<a class="d-flex p-3 border-bottom" href="javascript:void(0)">
+										<div class="d-flex p-3 border-bottom notification" >
 											<div class="mr-3">
 												<h5 class="notification-label mb-1">{{$notification['data']['content']}}</h5>
 												<div class="notification-subtext">{{$notification['created_at']->diffforHumans()}}</div>
 											</div>
 											<div class="mr-auto" >
-                                                <i class="fa fa-eye-slash text-left text-muted"></i>
-                                                <i class="fa fa-trash text-left text-muted"></i>
+                                                <a  href="javascript:void(0);" class="changeread" data-id="{{$notification['id']}}"><i class="fa fa-eye-slash text-left text-muted " ></i></a>
+                                                <a class="deletenotification" href="javascript:void(0);"  data-id="{{$notification['id']}}"><i class="fa fa-trash text-left text-muted " ></i></a>
 											</div>
-                                        </a>
+                                        </div>
                                         @empty
                                         <a class=" p-3 border-bottom text-center">
                                             <div class=" text-center">
@@ -80,3 +80,4 @@
 				</div>
 			</div>
 <!-- /main-header -->
+

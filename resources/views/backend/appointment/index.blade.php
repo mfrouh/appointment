@@ -55,7 +55,7 @@
                                 <td>{{$appointment->time}}</td>
                                 <td>{{$appointment->appointment_time_id}}</td>
                                 <td>{{$appointment->price}}</td>
-                                <td>{{$appointment->dignose}}</td>
+                                <td>{{$appointment->diagnose}}</td>
  								<td>
                                      <a class="btn btn-primary btn-sm edit" href="/appointment/{{$appointment->id}}/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                      <a class="btn btn-danger btn-sm delete"  data-id="{{$appointment->id}}" href="javscript::void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>

@@ -37,7 +37,7 @@ class AppointmentController extends Controller
         ]);
         $time=AppointmentTime::find($request->appointment_time_id);
         $day=$time->AppointmentDate->day;
-        $request->merge(['day'=>$day,'time'=>$time->time,'verification_code'=>rand(100000,999999),'verify_id'=>343434]);
+        $request->merge(['day'=>$day,'time'=>$time->time,'verification_code'=>rand(100000,999999),'verify_id'=>rand(10000000,99999999)]);
         if (Booking::where('verified',0)->where('appointment_time_id',$request->appointment_time_id)->count()==0) {
           $booking=Booking::create($request->all());
           $id=$booking->id;
@@ -51,6 +51,7 @@ class AppointmentController extends Controller
         //     'from' => 'mohamed frouh',
         //     'text' => $verification_code
         // ]);
+            AppointmentTime::find($booking->appointment_time_id)->update(['booked'=>1]);
             return redirect("/verifybooking/".$booking->verify_id);
         }
         return back()->with(['phone_number'=>$request->phone_number,'gender'=>$request->gender,'age'=>$request->age,'name'=>$request->name,'error'=>'هذاالوقت محجوز']);

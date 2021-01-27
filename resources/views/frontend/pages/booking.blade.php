@@ -71,7 +71,7 @@
                     </div>
                     <div class="summary">
                         @foreach ($dates as $date)
-                           <a href="javscript::void(0)" class="btn btn-primary btn-sm m-1 gettimes" data-id="{{$date->id}}" >( {{$date->times->count()}} )  {{$date->day->format('d-m-Y')}}</a>
+                           <a href="javscript::void(0)" class="btn_1 m-2 gettimes" data-id="{{$date->id}}" >( {{$date->times->count()}} )  {{$date->day->format('d-m-Y')}}</a>
                         @endforeach
                     </div>
             </div>
@@ -131,7 +131,7 @@
                 var s='btn-success'; var f='btn-danger';
                 var va='btn-success';
                 if (value.booked==0) { va='btn-success';  }else{va='btn-danger disabled';}
-                a+='<a href="javscript::void(0)" class="btn '+va+' col-2 m-2 p-2 btn-sm selecttime" data-id="'+value.id+'">'+value.time+'</a>';
+                a+='<a href="javscript::void(0)" class="btn '+va+' col-2 m-1 btn-sm selecttime" data-id="'+value.id+'">'+value.time+'</a>';
              });
              $('.times').html(a);
             },
